@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cockroachdb-core"
+version = "0.1.1"
+description = "CockroachDB Python Library — engine layer with retry, circuit breaker, and template"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{ name = "Felipe Gutierrez" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Typing :: Typed",
+]
+dependencies = [
+    "cockroachdb>=0.1.0",
+    "psycopg[binary]>=3.1",
+]
+
+[project.optional-dependencies]
+metrics = [
+    "prometheus-client",
+]
+otel = [
+    "opentelemetry-api>=1.20",
+]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.uv.sources]
+cockroachdb = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cockroachdb"]

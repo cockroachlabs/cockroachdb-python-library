@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cockroachdb-django"
+version = "0.1.1"
+description = "CockroachDB Python Library — Django adapter with retry, region, and follower-read support"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{ name = "Felipe Gutierrez" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Topic :: Database",
+    "Typing :: Typed",
+]
+dependencies = [
+    "cockroachdb>=0.1.0",
+    "cockroachdb-core>=0.1.0",
+    "django>=4.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pytest>=8.0",
+]
+
+[tool.uv.sources]
+cockroachdb = { workspace = true }
+cockroachdb-core = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cockroachdb"]

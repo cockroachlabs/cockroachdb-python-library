@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.whl
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+parts/
+var/
+wheels/
+share/python-wheels/
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Testing
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+pytestdebug.log
+
+# MyPy / type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
+
+# Packaging / Build
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter
+.ipynb_checkpoints
+
+# Environments
+*.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Local project state
+.local/
+
+# Documentation build
+docs/_build/
+site/
+
+# Distribution / packaging
+*.tar.gz
+*.zip

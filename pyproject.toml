@@ -1,0 +1,80 @@
+[project]
+name = "cockroachdb-python-library"
+version = "0.1.0"
+description = "CockroachDB Python Library — monorepo workspace"
+requires-python = ">=3.11"
+dependencies = [
+    "cockroachdb",
+    "cockroachdb-core",
+    "cockroachdb-continuum",
+    "cockroachdb-testing",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.uv.sources]
+cockroachdb = { workspace = true }
+cockroachdb-core = { workspace = true }
+cockroachdb-continuum = { workspace = true }
+cockroachdb-testing = { workspace = true }
+
+[tool.uv.workspace]
+members = [
+    "packages/cockroachdb",
+    "packages/cockroachdb-core",
+    "packages/cockroachdb-continuum",
+    "packages/cockroachdb-sqlalchemy",
+    "packages/cockroachdb-django",
+    "packages/cockroachdb-cdc",
+    "packages/cockroachdb-ai",
+    "packages/cockroachdb-testing",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+    "E", "W",    # pycodestyle
+    "F",         # pyflakes
+    "I",         # isort
+    "N",         # pep8-naming
+    "UP",        # pyupgrade
+    "B",         # flake8-bugbear
+    "SIM",       # flake8-simplify
+    "TC",        # flake8-type-checking
+    "RUF",       # ruff-specific
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cockroachdb"]
+
+[tool.ruff.lint.per-file-ignores]
+# Examples favour readability/completeness over lint purity and are not shipped.
+# E402: Django examples must configure settings before importing app modules.
+"examples/**" = ["E402", "E501", "B904", "F401"]
+# Tests: names encode PostgreSQL error codes (e.g. 40P01) and fake exception
+# classes; these are intentional and not part of any public API.
+"tests/**" = ["N802", "N818", "E501", "SIM117"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "packages/cockroachdb/src:packages/cockroachdb-core/src:packages/cockroachdb-continuum/src:packages/cockroachdb-testing/src:packages/cockroachdb-cdc/src:packages/cockroachdb-ai/src:packages/cockroachdb-sqlalchemy/src:packages/cockroachdb-django/src"
+
+# numpy's published stubs use PEP 695 `type` statements that mypy cannot parse
+# under python_version 3.11; skip analyzing them (we don't type-check numpy).
+[[tool.mypy.overrides]]
+module = ["numpy", "numpy.*"]
+follow_imports = "skip"
+follow_imports_for_stubs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

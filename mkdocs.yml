@@ -1,0 +1,57 @@
+site_name: CockroachDB Python Library
+site_description: Production-grade Python toolkit for CockroachDB with retry, circuit breaker, multi-region, CDC, and AI/vector support.
+repo_url: https://github.com/cockroachdb/cockroachdb-python-library
+repo_name: cockroachdb-python-library
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: custom
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Packages:
+      - Base: packages/base.md
+      - Core: packages/core.md
+      - SQLAlchemy: packages/sqlalchemy.md
+      - Django: packages/django.md
+      - CDC: packages/cdc.md
+      - AI: packages/ai.md
+      - Testing: packages/testing.md
+  - API Reference: api-reference.md
+  - Examples: examples.md
+  - Contributing: contributing.md

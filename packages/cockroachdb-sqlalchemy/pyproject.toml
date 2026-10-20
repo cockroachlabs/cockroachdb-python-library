@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cockroachdb-sqlalchemy"
+version = "0.1.1"
+description = "CockroachDB Python Library — SQLAlchemy 2.0 adapter with retry, region, and follower-read support"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{ name = "Felipe Gutierrez" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Typing :: Typed",
+]
+dependencies = [
+    "cockroachdb>=0.1.0",
+    "cockroachdb-core>=0.1.0",
+    "sqlalchemy>=2.0",
+    "psycopg[binary]>=3.1",
+]
+
+[project.optional-dependencies]
+alembic = ["alembic>=1.0"]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pytest>=8.0",
+    "alembic>=1.0",
+]
+
+[project.entry-points."sqlalchemy.dialects"]
+cockroachdb = "cockroachdb.sqla.dialect:CockroachDBDialect"
+"cockroachdb.psycopg" = "cockroachdb.sqla.dialect:CockroachDBDialect"
+"cockroachdb.psycopg2" = "cockroachdb.sqla.dialect:CockroachDBDialect"
+
+[tool.uv.sources]
+cockroachdb = { workspace = true }
+cockroachdb-core = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cockroachdb"]

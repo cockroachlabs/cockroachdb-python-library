@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="900" height="650">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6933FF;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#6933FF;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#37A806;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#37A806;stop-opacity:0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="650" fill="#0d1117" rx="8"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700">CockroachDB Python Library v0.1.0</text>
+  <text x="450" y="56" text-anchor="middle" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="11">Package Architecture &amp; Dependency Graph</text>
+
+  <!-- Layer 1: User Application -->
+  <rect x="280" y="75" width="340" height="48" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="103" text-anchor="middle" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600">User Application</text>
+  <text x="450" y="117" text-anchor="middle" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="9">FastAPI / Django / Flask / Scripts</text>
+
+  <!-- Arrow: App -> Adapters -->
+  <line x1="450" y1="123" x2="450" y2="148" stroke="#484f58" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+  <line x1="300" y1="123" x2="190" y2="148" stroke="#484f58" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+  <line x1="600" y1="123" x2="710" y2="148" stroke="#484f58" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <defs>
+    <marker id="arrowGray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="none" stroke="#484f58" stroke-width="1"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="none" stroke="#6933FF" stroke-width="1"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="none" stroke="#37A806" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- Layer 2: Adapter Packages -->
+  <rect x="28" y="148" width="240" height="100" rx="6" fill="url(#purpleGrad)" stroke="#6933FF" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="148" y="170" text-anchor="middle" fill="#c9b1ff" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700">cockroachdb-sqlalchemy</text>
+  <text x="148" y="188" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">CockroachDBSession</text>
+  <text x="148" y="201" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">create_cockroachdb_engine()</text>
+  <text x="148" y="214" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">RegionalByRowMixin</text>
+  <text x="148" y="227" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">GlobalTableMixin</text>
+  <text x="148" y="240" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">SQLAlchemy event listeners</text>
+
+  <rect x="282" y="148" width="240" height="100" rx="6" fill="url(#purpleGrad)" stroke="#6933FF" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="402" y="170" text-anchor="middle" fill="#c9b1ff" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700">cockroachdb-cdc</text>
+  <text x="402" y="188" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">@changefeed_handler</text>
+  <text x="402" y="201" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">ChangefeedEvent[T]</text>
+  <text x="402" y="214" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">ChangefeedManager</text>
+  <text x="402" y="227" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">ASGI/FastAPI router</text>
+
+  <rect x="536" y="148" width="240" height="100" rx="6" fill="url(#purpleGrad)" stroke="#6933FF" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="656" y="170" text-anchor="middle" fill="#c9b1ff" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700">cockroachdb-ai</text>
+  <text x="656" y="188" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">VectorSearchTemplate</text>
+  <text x="656" y="201" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">CockroachDBVectorStore</text>
+  <text x="656" y="214" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">RagPipeline</text>
+  <text x="656" y="227" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">EmbeddingProvider protocol</text>
+  <text x="656" y="240" text-anchor="middle" fill="#8b949e" font-family="monospace" font-size="9">@vector_search @semantic_search</text>
+
+  <!-- Label: Adapters -->
+  <text x="14" y="195" fill="#6933FF" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="600" transform="rotate(-90, 14, 195)">ADAPTERS</text>
+
+  <!-- Arrows: Adapters -> Core -->
+  <line x1="148" y1="248" x2="350" y2="280" stroke="#6933FF" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowPurple)"/>
+  <line x1="402" y1="248" x2="450" y2="280" stroke="#6933FF" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowPurple)"/>
+  <line x1="656" y1="248" x2="550" y2="280" stroke="#6933FF" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowPurple)"/>
+
+  <!-- Layer 3: Core Package -->
+  <rect x="130" y="280" width="640" height="110" rx="6" fill="url(#greenGrad)" stroke="#37A806" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="302" text-anchor="middle" fill="#7ee787" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700">cockroachdb-core</text>
+
+  <!-- Core components as mini boxes -->
+  <rect x="148" y="312" width="120" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="208" y="332" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">RetryEngine</text>
+
+  <rect x="282" y="312" width="120" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="342" y="332" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">CircuitBreaker</text>
+
+  <rect x="416" y="312" width="120" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="476" y="332" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">RegionContext</text>
+
+  <rect x="550" y="312" width="120" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="610" y="332" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">FollowerRead</text>
+
+  <rect x="215" y="352" width="120" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="275" y="372" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Metrics</text>
+
+  <rect x="349" y="352" width="120" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="409" y="372" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Middleware</text>
+
+  <rect x="483" y="352" width="150" height="32" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="558" y="372" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">CockroachDBTemplate</text>
+
+  <!-- Label: Core -->
+  <text x="116" y="345" fill="#37A806" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="600" transform="rotate(-90, 116, 345)">CORE</text>
+
+  <!-- Arrow: Core -> Base -->
+  <line x1="450" y1="390" x2="450" y2="420" stroke="#37A806" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowGreen)"/>
+
+  <!-- Layer 4: Base Package -->
+  <rect x="175" y="420" width="550" height="80" rx="6" fill="#161b22" stroke="#e6edf3" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="442" text-anchor="middle" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700">cockroachdb</text>
+  <text x="450" y="456" text-anchor="middle" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">Base Package — Zero Heavy Dependencies</text>
+
+  <rect x="195" y="464" width="100" height="26" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="245" y="481" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Decorators</text>
+
+  <rect x="310" y="464" width="80" height="26" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="350" y="481" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Types</text>
+
+  <rect x="405" y="464" width="80" height="26" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="445" y="481" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Config</text>
+
+  <rect x="500" y="464" width="100" height="26" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="550" y="481" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Exceptions</text>
+
+  <rect x="615" y="464" width="90" height="26" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="660" y="481" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="10">Pydantic</text>
+
+  <!-- Label: Base -->
+  <text x="161" y="465" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="600" transform="rotate(-90, 161, 465)">BASE</text>
+
+  <!-- Layer 5: Testing Package -->
+  <rect x="220" y="530" width="460" height="72" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="552" text-anchor="middle" fill="#f0883e" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700">cockroachdb-testing</text>
+  <text x="450" y="568" text-anchor="middle" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">Dev Dependency Only</text>
+
+  <rect x="240" y="576" width="130" height="20" rx="3" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="305" y="590" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="9">CockroachDBFixture</text>
+
+  <rect x="384" y="576" width="120" height="20" rx="3" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="444" y="590" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="9">RetrySimulator</text>
+
+  <rect x="518" y="576" width="140" height="20" rx="3" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="588" y="590" text-anchor="middle" fill="#e6edf3" font-family="monospace" font-size="9">ConcurrencyRunner</text>
+
+  <!-- Dashed arrow: Testing -> Base + Core -->
+  <line x1="350" y1="530" x2="350" y2="502" stroke="#f0883e" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="550" y1="530" x2="550" y2="502" stroke="#f0883e" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Legend -->
+  <rect x="30" y="608" width="12" height="12" rx="2" fill="none" stroke="#6933FF" stroke-width="1.5"/>
+  <text x="48" y="619" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">Adapter (optional)</text>
+
+  <rect x="170" y="608" width="12" height="12" rx="2" fill="none" stroke="#37A806" stroke-width="1.5"/>
+  <text x="188" y="619" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">Core engine</text>
+
+  <rect x="280" y="608" width="12" height="12" rx="2" fill="none" stroke="#e6edf3" stroke-width="1.5"/>
+  <text x="298" y="619" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">Base (required)</text>
+
+  <rect x="400" y="608" width="12" height="12" rx="2" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="418" y="619" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">Testing (dev only)</text>
+
+  <line x1="545" y1="614" x2="575" y2="614" stroke="#484f58" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="582" y="618" fill="#8b949e" font-family="Inter, system-ui, sans-serif" font-size="10">depends on</text>
+
+  <!-- Python version badge -->
+  <text x="870" y="638" text-anchor="end" fill="#484f58" font-family="Inter, system-ui, sans-serif" font-size="9">Python 3.11+ | Apache-2.0</text>
+</svg>

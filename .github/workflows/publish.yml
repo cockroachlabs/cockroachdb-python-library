@@ -1,0 +1,31 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Build all packages
+        run: |
+          for pkg in packages/*/; do
+            echo "Building $pkg"
+            (cd "$pkg" && uv build)
+          done
+
+      - name: Collect dist artifacts
+        run: |
+          mkdir -p dist
+          cp packages/*/dist/* dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

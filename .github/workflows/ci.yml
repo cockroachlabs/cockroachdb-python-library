@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install Python
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install workspace packages
+        run: uv sync --all-packages --all-extras
+
+      - name: Ruff format check
+        run: uv run ruff format --check .
+
+      - name: Ruff lint
+        run: uv run ruff check .
+
+      - name: Mypy
+        run: uv run mypy packages/cockroachdb/src packages/cockroachdb-core/src packages/cockroachdb-continuum/src packages/cockroachdb-testing/src
+
+      - name: Pytest
+        run: uv run pytest tests/ -v --tb=short
