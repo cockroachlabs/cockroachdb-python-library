@@ -46,13 +46,33 @@ def normalize(name: str) -> str:
     return re.sub(r"[-_.]+", "-", name).lower()
 
 
+def _project_of(filename: str) -> str:
+    """Extract the distribution project name from a wheel/sdist filename.
+
+    ``cockroachdb_core-0.1.1-py3-none-any.whl`` -> ``cockroachdb_core``
+    (everything before the first ``-<digit...>`` version token).
+    """
+    parts = []
+    for part in filename.split("-"):
+        if part and part[0].isdigit():
+            break
+        parts.append(part)
+    return "-".join(parts)
+
+
 def discover() -> list[dict]:
-    """Read every workspace package: name, version, and its built dist files."""
+    """Read every workspace package and attach its built dist files.
+
+    ``uv build`` in a uv workspace writes all artifacts to the workspace-root
+    ``dist/`` (not ``packages/*/dist/``), so match files to packages by name.
+    """
+    dist_dir = ROOT / "dist"
+    all_dists = sorted(dist_dir.glob("*")) if dist_dir.is_dir() else []
     out = []
     for pyproject in sorted((ROOT / "packages").glob("*/pyproject.toml")):
         data = tomllib.loads(pyproject.read_text())["project"]
-        pkgdir = pyproject.parent
-        dists = sorted((pkgdir / "dist").glob("*")) if (pkgdir / "dist").is_dir() else []
+        norm = normalize(data["name"])
+        dists = [d for d in all_dists if normalize(_project_of(d.name)) == norm]
         out.append({"name": data["name"], "version": data["version"], "dists": dists})
     return out
 
