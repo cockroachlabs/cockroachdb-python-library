@@ -1,0 +1,1267 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="pdoc 16.0.0"/>
+    <title>cockroachdb API documentation</title>
+
+    <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
+    <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
+    <style>/*! theme.css */:root{--pdoc-background:#fff;}.pdoc{--text:#212529;--muted:#6c757d;--link:#3660a5;--link-hover:#1659c5;--code:#f8f8f8;--active:#fff598;--accent:#eee;--accent2:#c1c1c1;--nav-hover:rgba(255, 255, 255, 0.5);--name:#0066BB;--def:#008800;--annotation:#007020;}</style>
+    <style>/*! layout.css */html, body{width:100%;height:100%;}html, main{scroll-behavior:smooth;}body{background-color:var(--pdoc-background);}@media (max-width:769px){#navtoggle{cursor:pointer;position:absolute;width:50px;height:40px;top:1rem;right:1rem;border-color:var(--text);color:var(--text);display:flex;opacity:0.8;z-index:999;}#navtoggle:hover{opacity:1;}#togglestate + div{display:none;}#togglestate:checked + div{display:inherit;}main, header{padding:2rem 3vw;}header + main{margin-top:-3rem;}.git-button{display:none !important;}nav input[type="search"]{max-width:77%;}nav input[type="search"]:first-child{margin-top:-6px;}nav input[type="search"]:valid ~ *{display:none !important;}}@media (min-width:770px){:root{--sidebar-width:clamp(12.5rem, 28vw, 22rem);}nav{position:fixed;overflow:auto;height:100vh;width:var(--sidebar-width);}main, header{padding:3rem 2rem 3rem calc(var(--sidebar-width) + 3rem);width:calc(54rem + var(--sidebar-width));max-width:100%;}header + main{margin-top:-4rem;}#navtoggle{display:none;}}#togglestate{position:absolute;height:0;opacity:0;}nav.pdoc{--pad:clamp(0.5rem, 2vw, 1.75rem);--indent:1.5rem;background-color:var(--accent);border-right:1px solid var(--accent2);box-shadow:0 0 20px rgba(50, 50, 50, .2) inset;padding:0 0 0 var(--pad);overflow-wrap:anywhere;scrollbar-width:thin; scrollbar-color:var(--accent2) transparent; z-index:1}nav.pdoc::-webkit-scrollbar{width:.4rem; }nav.pdoc::-webkit-scrollbar-thumb{background-color:var(--accent2); }nav.pdoc > div{padding:var(--pad) 0;}nav.pdoc .module-list-button{display:inline-flex;align-items:center;color:var(--text);border-color:var(--muted);margin-bottom:1rem;}nav.pdoc .module-list-button:hover{border-color:var(--text);}nav.pdoc input[type=search]{display:block;outline-offset:0;width:calc(100% - var(--pad));}nav.pdoc .logo{max-width:calc(100% - var(--pad));max-height:35vh;display:block;margin:0 auto 1rem;transform:translate(calc(-.5 * var(--pad)), 0);}nav.pdoc ul{list-style:none;padding-left:0;}nav.pdoc > div > ul{margin-left:calc(0px - var(--pad));}nav.pdoc li a{padding:.2rem 0 .2rem calc(var(--pad) + var(--indent));}nav.pdoc > div > ul > li > a{padding-left:var(--pad);}nav.pdoc li{transition:all 100ms;}nav.pdoc li:hover{background-color:var(--nav-hover);}nav.pdoc a, nav.pdoc a:hover{color:var(--text);}nav.pdoc a{display:block;}nav.pdoc > h2:first-of-type{margin-top:1.5rem;}nav.pdoc .class:before{content:"class ";color:var(--muted);}nav.pdoc .function:after{content:"()";color:var(--muted);}nav.pdoc footer:before{content:"";display:block;width:calc(100% - var(--pad));border-top:solid var(--accent2) 1px;margin-top:1.5rem;padding-top:.5rem;}nav.pdoc footer{font-size:small;}</style>
+    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:.75rem center;margin-bottom:1rem;}.pdoc .alert > em{display:none;}.pdoc .alert > *:last-child{margin-bottom:0;}.pdoc .alert.note{color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .alert.tip{color:#0a3622;background-color:#d1e7dd;border-color:#a3cfbb;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%230a3622%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2%206a6%206%200%201%201%2010.174%204.31c-.203.196-.359.4-.453.619l-.762%201.769A.5.5%200%200%201%2010.5%2013a.5.5%200%200%201%200%201%20.5.5%200%200%201%200%201l-.224.447a1%201%200%200%201-.894.553H6.618a1%201%200%200%201-.894-.553L5.5%2015a.5.5%200%200%201%200-1%20.5.5%200%200%201%200-1%20.5.5%200%200%201-.46-.302l-.761-1.77a2%202%200%200%200-.453-.618A5.98%205.98%200%200%201%202%206m6-5a5%205%200%200%200-3.479%208.592c.263.254.514.564.676.941L5.83%2012h4.342l.632-1.467c.162-.377.413-.687.676-.941A5%205%200%200%200%208%201%22/%3E%3C/svg%3E");}.pdoc .alert.important{color:#055160;background-color:#cff4fc;border-color:#9eeaf9;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23055160%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2%200a2%202%200%200%200-2%202v12a2%202%200%200%200%202%202h12a2%202%200%200%200%202-2V2a2%202%200%200%200-2-2zm6%204c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%204.995A.905.905%200%200%201%208%204m.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E");}.pdoc .alert.warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .alert.caution{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M11.46.146A.5.5%200%200%200%2011.107%200H4.893a.5.5%200%200%200-.353.146L.146%204.54A.5.5%200%200%200%200%204.893v6.214a.5.5%200%200%200%20.146.353l4.394%204.394a.5.5%200%200%200%20.353.146h6.214a.5.5%200%200%200%20.353-.146l4.394-4.394a.5.5%200%200%200%20.146-.353V4.893a.5.5%200%200%200-.146-.353zM8%204c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%204.995A.905.905%200%200%201%208%204m.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E");}.pdoc .alert.danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .decorator-deprecated{color:#842029;}.pdoc .decorator-deprecated ~ span{filter:grayscale(1) opacity(0.8);}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:27px;vertical-align:bottom;width:50px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
+    <style>/*! custom.css */</style></head>
+<body>
+    <nav class="pdoc">
+        <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
+        <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div>
+
+
+
+
+            <h2>API Documentation</h2>
+                <ul class="memberlist">
+            <li>
+                    <a class="class" href="#CircuitBreakerOpenError">CircuitBreakerOpenError</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#CircuitBreakerOpenError.__init__">CircuitBreakerOpenError</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CircuitBreakerOpenError.recovery_seconds">recovery_seconds</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#CockroachDBError">CockroachDBError</a>
+                            <ul class="memberlist">
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#CockroachDBRetryExhausted">CockroachDBRetryExhausted</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#CockroachDBRetryExhausted.__init__">CockroachDBRetryExhausted</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CockroachDBRetryExhausted.max_retries">max_retries</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CockroachDBRetryExhausted.last_error">last_error</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#DistanceMetric">DistanceMetric</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#DistanceMetric.COSINE">COSINE</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DistanceMetric.EUCLIDEAN">EUCLIDEAN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DistanceMetric.INNER_PRODUCT">INNER_PRODUCT</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DistanceMetric.operator">operator</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DistanceMetric.opclass">opclass</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#DistanceMetric.to_similarity">to_similarity</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#IsolationLevel">IsolationLevel</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#IsolationLevel.SERIALIZABLE">SERIALIZABLE</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#IsolationLevel.READ_COMMITTED">READ_COMMITTED</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#RegionValidationError">RegionValidationError</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#RegionValidationError.__init__">RegionValidationError</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RegionValidationError.region">region</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RegionValidationError.reason">reason</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#RetryPolicy">RetryPolicy</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#RetryPolicy.__init__">RetryPolicy</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RetryPolicy.max_retries">max_retries</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RetryPolicy.base_delay">base_delay</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RetryPolicy.max_delay">max_delay</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RetryPolicy.multiplier">multiplier</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#RetryPolicy.jitter_factor">jitter_factor</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#TransactionOutcome">TransactionOutcome</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#TransactionOutcome.COMMITTED">COMMITTED</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#TransactionOutcome.RETRIED">RETRIED</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#TransactionOutcome.FAILED">FAILED</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="variable" href="#__version__">__version__</a>
+            </li>
+            <li>
+                    <a class="function" href="#changefeed_handler">changefeed_handler</a>
+            </li>
+            <li>
+                    <a class="function" href="#crdb_region">crdb_region</a>
+            </li>
+            <li>
+                    <a class="function" href="#crdb_retry">crdb_retry</a>
+            </li>
+            <li>
+                    <a class="function" href="#follower_read">follower_read</a>
+            </li>
+            <li>
+                    <a class="function" href="#global_table">global_table</a>
+            </li>
+            <li>
+                    <a class="function" href="#regional_by_row">regional_by_row</a>
+            </li>
+            <li>
+                    <a class="function" href="#semantic_search">semantic_search</a>
+            </li>
+            <li>
+                    <a class="function" href="#vector_search">vector_search</a>
+            </li>
+    </ul>
+
+
+
+        <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
+            built with <span class="visually-hidden">pdoc</span><img
+                alt="pdoc logo"
+                src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20role%3D%22img%22%20aria-label%3D%22pdoc%20logo%22%20width%3D%22300%22%20height%3D%22160%22%20viewBox%3D%220%200%20150%2080%22%3E%3Ctitle%3Epdoc%3C/title%3E%3Cpath%20d%3D%22M132.316%2048.886c.276-4.679%202.342-6.698%204.409-7.982s4.27-1.165%206.751-1.055c1.586.07%203.044.156%204.222-.482%201.142-.619%202.026-1.932%202.162-3.739.268-3.576-1.929-5.368-5.006-5.551s-7.599.524-10.517%201.606c-4.455%201.652-8.588%206.606-9.552%208.992s-2.342%206.193-1.745%2010.873%202.664%209.221%205.878%2011.79%205.878%203.808%2010.103%204.312%203.444.229%206.062.229%205.006-2.202%204.914-4.909-2.296-5.001-4.501-4.863-3.077.505-5.281.229-7.715-2.064-7.899-9.451z%22%20fill%3D%22%23198754%22/%3E%3Ccircle%20cx%3D%22101.504%22%20cy%3D%2248.943%22%20r%3D%2214.208%22%20fill%3D%22none%22%20stroke%3D%22%23198754%22%20stroke-width%3D%229.354%22/%3E%3Cpath%20d%3D%22M87.81.002c-3.637.065-5.001.454-7.014%201.232s-3.443%201.363-6.3%204.282c-1.723%201.76-3.148%205.019-3.776%207.329-.413%201.521-.316%202.63-.316%202.63l-.195%2034.612c.065%205.774-6.755%208.305-9.612%208.37s-9.678-1.038-9.743-9.408%207.128-9.521%208.362-9.521c1.413-.13%202.526-.021%203.718-.016%202.071.009%204.157-.778%204.092-4.671s-4.157-4.736-4.157-4.736c-6.3-.843-11.43%202.206-11.43%202.206S40.917%2038.15%2041.372%2049.634%2051.568%2068.19%2061.311%2068.125s18.316-7.007%2018.445-17.193l.13-22.772c.046-2.291%202.683-3.644%204.476-4.203.745-.232%201.694-.274%201.694-.274l10.457-.13s4.871-.324%207.729-3.114%204.352-6.294%204.352-6.294.974-3.049.13-4.606-.195-1.233-2.792-3.309-8.573-4.477-8.573-4.477S91.447-.063%2087.81.002zM0%2047.169l.065%2028.417S0%2080.127%204.481%2079.997s5.072-3.866%205.049-4.152l-.113-28.482s1.624-7.656%209.937-7.721%2010.002%206.942%2010.002%208.499-.909%2010.51-9.093%2010.51c-.948%200-2.99-.567-4.145-.272-3.919%201-3.194%204.554-3.194%204.554s.065%205.061%207.404%204.996%2018.575-6.034%2018.575-19.074S26.953%2030.04%2019.549%2029.91%201.234%2035.296%200%2047.169z%22%20fill%3D%22%23198754%22/%3E%3Cg%20transform%3D%22matrix%28.325601%200%200%20.325256%20-10.32669%20-45.802786%29%22%3E%3Ccircle%20cx%3D%22297.554%22%20cy%3D%22172.286%22%20r%3D%2216.5%22%20fill%3D%22%23fff%22/%3E%3Cellipse%20cx%3D%22297.709%22%20cy%3D%22172.642%22%20rx%3D%2211.071%22%20ry%3D%2210.871%22%20fill%3D%22%23105a48%22/%3E%3Ccircle%20cx%3D%22304.104%22%20cy%3D%22167.667%22%20r%3D%224.5%22%20fill%3D%22%23fff%22/%3E%3C/g%3E%3Cpath%20d%3D%22M94.661%2017.032l.893-1.476s.99.714%201.916.925%201.575.114%202.955.114l14.565-.162c1.283-.032%203.085-.762%203.02-3.293s-.373-3.503-.373-3.503l1.283-.487s.52.503.877%201.573.309%201.995.292%202.66-.227%201.541-.227%201.541%201.564-.308%202.359-1.038.823-.779%201.489-1.508.812-.86.812-.86.552-.13.877.26.341.957.065%201.46-1.672%202.206-3.247%203.066-2.76%201.427-3.929%201.768-3.848.73-7.063.714l-10.944-.114s-2.143-.081-3.02-.373-2.241-.973-2.598-1.265z%22%20fill%3D%22%23d36d49%22/%3E%3Cg%20fill%3D%22%23105a48%22%3E%3Cellipse%20cx%3D%2293.052%22%20cy%3D%2243.567%22%20rx%3D%22.869%22%20ry%3D%221.014%22%20transform%3D%22rotate%28341.022%29%22/%3E%3Cellipse%20cx%3D%22104.3%22%20cy%3D%22-16.184%22%20rx%3D%22.865%22%20ry%3D%221.009%22%20transform%3D%22rotate%2814.786%29%22/%3E%3C/g%3E%3C/svg%3E"/>
+        </a>
+</div>
+    </nav>
+    <main class="pdoc">
+            <section class="module-info">
+                    <h1 class="modulename">
+cockroachdb    </h1>
+
+                        <div class="docstring"><p>CockroachDB Python Library — base package.</p>
+
+<p>Provides decorators, types, configuration, and exception hierarchy
+for building CockroachDB-aware Python applications.</p>
+</div>
+
+                        <input id="mod-cockroachdb-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+
+                        <label class="view-source-button" for="mod-cockroachdb-view-source"><span>View Source</span></label>
+
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">"""CockroachDB Python Library — base package.</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">Provides decorators, types, configuration, and exception hierarchy</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">for building CockroachDB-aware Python applications.</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">"""</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">pkgutil</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="n">__path__</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">cockroachdb.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="n">changefeed_handler</span><span class="p">,</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">crdb_region</span><span class="p">,</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="n">crdb_retry</span><span class="p">,</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="n">follower_read</span><span class="p">,</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">global_table</span><span class="p">,</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">regional_by_row</span><span class="p">,</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">semantic_search</span><span class="p">,</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">vector_search</span><span class="p">,</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="p">)</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">cockroachdb.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="n">CircuitBreakerOpenError</span><span class="p">,</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="n">CockroachDBError</span><span class="p">,</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="n">CockroachDBRetryExhausted</span><span class="p">,</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="n">RegionValidationError</span><span class="p">,</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">cockroachdb.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">DistanceMetric</span><span class="p">,</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">IsolationLevel</span><span class="p">,</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">RetryPolicy</span><span class="p">,</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">TransactionOutcome</span><span class="p">,</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="p">)</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="s2">"0.1.0"</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>    <span class="s2">"CircuitBreakerOpenError"</span><span class="p">,</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="c1"># Exceptions</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="s2">"CockroachDBError"</span><span class="p">,</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="s2">"CockroachDBRetryExhausted"</span><span class="p">,</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="s2">"DistanceMetric"</span><span class="p">,</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="s2">"IsolationLevel"</span><span class="p">,</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="s2">"RegionValidationError"</span><span class="p">,</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="c1"># Types</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="s2">"RetryPolicy"</span><span class="p">,</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="s2">"TransactionOutcome"</span><span class="p">,</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="c1"># Meta</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="s2">"__version__"</span><span class="p">,</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="s2">"changefeed_handler"</span><span class="p">,</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="s2">"crdb_region"</span><span class="p">,</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="c1"># Decorators</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="s2">"crdb_retry"</span><span class="p">,</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="s2">"follower_read"</span><span class="p">,</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="s2">"global_table"</span><span class="p">,</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="s2">"regional_by_row"</span><span class="p">,</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="s2">"semantic_search"</span><span class="p">,</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="s2">"vector_search"</span><span class="p">,</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a><span class="p">]</span>
+</span></pre></div>
+
+
+            </section>
+                <section id="CircuitBreakerOpenError">
+                            <input id="CircuitBreakerOpenError-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">CircuitBreakerOpenError</span><wbr>(<span class="base"><a href="#CockroachDBError">cockroachdb.CockroachDBError</a></span>):
+
+                <label class="view-source-button" for="CircuitBreakerOpenError-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CircuitBreakerOpenError"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CircuitBreakerOpenError-22"><a href="#CircuitBreakerOpenError-22"><span class="linenos">22</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CircuitBreakerOpenError</span><span class="p">(</span><span class="n">CockroachDBError</span><span class="p">):</span>
+</span><span id="CircuitBreakerOpenError-23"><a href="#CircuitBreakerOpenError-23"><span class="linenos">23</span></a><span class="w">    </span><span class="sd">"""Raised when the circuit breaker is open and rejecting calls."""</span>
+</span><span id="CircuitBreakerOpenError-24"><a href="#CircuitBreakerOpenError-24"><span class="linenos">24</span></a>
+</span><span id="CircuitBreakerOpenError-25"><a href="#CircuitBreakerOpenError-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recovery_seconds</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CircuitBreakerOpenError-26"><a href="#CircuitBreakerOpenError-26"><span class="linenos">26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">recovery_seconds</span> <span class="o">=</span> <span class="n">recovery_seconds</span>
+</span><span id="CircuitBreakerOpenError-27"><a href="#CircuitBreakerOpenError-27"><span class="linenos">27</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Circuit breaker is open. Recovery in </span><span class="si">{</span><span class="n">recovery_seconds</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Raised when the circuit breaker is open and rejecting calls.</p>
+</div>
+
+
+                            <div id="CircuitBreakerOpenError.__init__" class="classattr">
+                                        <input id="CircuitBreakerOpenError.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">CircuitBreakerOpenError</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">recovery_seconds</span><span class="p">:</span> <span class="nb">float</span></span>)</span>
+
+                <label class="view-source-button" for="CircuitBreakerOpenError.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CircuitBreakerOpenError.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CircuitBreakerOpenError.__init__-25"><a href="#CircuitBreakerOpenError.__init__-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recovery_seconds</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CircuitBreakerOpenError.__init__-26"><a href="#CircuitBreakerOpenError.__init__-26"><span class="linenos">26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">recovery_seconds</span> <span class="o">=</span> <span class="n">recovery_seconds</span>
+</span><span id="CircuitBreakerOpenError.__init__-27"><a href="#CircuitBreakerOpenError.__init__-27"><span class="linenos">27</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Circuit breaker is open. Recovery in </span><span class="si">{</span><span class="n">recovery_seconds</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="CircuitBreakerOpenError.recovery_seconds" class="classattr">
+                                <div class="attr variable">
+            <span class="name">recovery_seconds</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CircuitBreakerOpenError.recovery_seconds"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="CockroachDBError">
+                            <input id="CockroachDBError-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">CockroachDBError</span><wbr>(<span class="base">builtins.Exception</span>):
+
+                <label class="view-source-button" for="CockroachDBError-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CockroachDBError"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CockroachDBError-7"><a href="#CockroachDBError-7"><span class="linenos">7</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CockroachDBError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="CockroachDBError-8"><a href="#CockroachDBError-8"><span class="linenos">8</span></a><span class="w">    </span><span class="sd">"""Base exception for all CockroachDB library errors."""</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Base exception for all CockroachDB library errors.</p>
+</div>
+
+
+                </section>
+                <section id="CockroachDBRetryExhausted">
+                            <input id="CockroachDBRetryExhausted-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">CockroachDBRetryExhausted</span><wbr>(<span class="base"><a href="#CockroachDBError">cockroachdb.CockroachDBError</a></span>):
+
+                <label class="view-source-button" for="CockroachDBRetryExhausted-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CockroachDBRetryExhausted"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CockroachDBRetryExhausted-11"><a href="#CockroachDBRetryExhausted-11"><span class="linenos">11</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CockroachDBRetryExhausted</span><span class="p">(</span><span class="n">CockroachDBError</span><span class="p">):</span>  <span class="c1"># noqa: N818  # public API; name predates the Error-suffix convention</span>
+</span><span id="CockroachDBRetryExhausted-12"><a href="#CockroachDBRetryExhausted-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">"""Raised when all retry attempts are exhausted on serialization conflicts."""</span>
+</span><span id="CockroachDBRetryExhausted-13"><a href="#CockroachDBRetryExhausted-13"><span class="linenos">13</span></a>
+</span><span id="CockroachDBRetryExhausted-14"><a href="#CockroachDBRetryExhausted-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">last_error</span><span class="p">:</span> <span class="ne">Exception</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CockroachDBRetryExhausted-15"><a href="#CockroachDBRetryExhausted-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span> <span class="o">=</span> <span class="n">max_retries</span>
+</span><span id="CockroachDBRetryExhausted-16"><a href="#CockroachDBRetryExhausted-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">last_error</span> <span class="o">=</span> <span class="n">last_error</span>
+</span><span id="CockroachDBRetryExhausted-17"><a href="#CockroachDBRetryExhausted-17"><span class="linenos">17</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="CockroachDBRetryExhausted-18"><a href="#CockroachDBRetryExhausted-18"><span class="linenos">18</span></a>            <span class="sa">f</span><span class="s2">"Transaction failed after </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s2"> retries. Last error: </span><span class="si">{</span><span class="n">last_error</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="CockroachDBRetryExhausted-19"><a href="#CockroachDBRetryExhausted-19"><span class="linenos">19</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Raised when all retry attempts are exhausted on serialization conflicts.</p>
+</div>
+
+
+                            <div id="CockroachDBRetryExhausted.__init__" class="classattr">
+                                        <input id="CockroachDBRetryExhausted.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">CockroachDBRetryExhausted</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span>, </span><span class="param"><span class="n">last_error</span><span class="p">:</span> <span class="ne">Exception</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+
+                <label class="view-source-button" for="CockroachDBRetryExhausted.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CockroachDBRetryExhausted.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CockroachDBRetryExhausted.__init__-14"><a href="#CockroachDBRetryExhausted.__init__-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">last_error</span><span class="p">:</span> <span class="ne">Exception</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="CockroachDBRetryExhausted.__init__-15"><a href="#CockroachDBRetryExhausted.__init__-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span> <span class="o">=</span> <span class="n">max_retries</span>
+</span><span id="CockroachDBRetryExhausted.__init__-16"><a href="#CockroachDBRetryExhausted.__init__-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">last_error</span> <span class="o">=</span> <span class="n">last_error</span>
+</span><span id="CockroachDBRetryExhausted.__init__-17"><a href="#CockroachDBRetryExhausted.__init__-17"><span class="linenos">17</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="CockroachDBRetryExhausted.__init__-18"><a href="#CockroachDBRetryExhausted.__init__-18"><span class="linenos">18</span></a>            <span class="sa">f</span><span class="s2">"Transaction failed after </span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s2"> retries. Last error: </span><span class="si">{</span><span class="n">last_error</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="CockroachDBRetryExhausted.__init__-19"><a href="#CockroachDBRetryExhausted.__init__-19"><span class="linenos">19</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="CockroachDBRetryExhausted.max_retries" class="classattr">
+                                <div class="attr variable">
+            <span class="name">max_retries</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CockroachDBRetryExhausted.max_retries"></a>
+    
+    
+
+                            </div>
+                            <div id="CockroachDBRetryExhausted.last_error" class="classattr">
+                                <div class="attr variable">
+            <span class="name">last_error</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CockroachDBRetryExhausted.last_error"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="DistanceMetric">
+                            <input id="DistanceMetric-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">DistanceMetric</span><wbr>(<span class="base">enum.StrEnum</span>):
+
+                <label class="view-source-button" for="DistanceMetric-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DistanceMetric"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DistanceMetric-18"><a href="#DistanceMetric-18"><span class="linenos">18</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DistanceMetric</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="DistanceMetric-19"><a href="#DistanceMetric-19"><span class="linenos">19</span></a><span class="w">    </span><span class="sd">"""Vector distance metrics for pgvector operations."""</span>
+</span><span id="DistanceMetric-20"><a href="#DistanceMetric-20"><span class="linenos">20</span></a>
+</span><span id="DistanceMetric-21"><a href="#DistanceMetric-21"><span class="linenos">21</span></a>    <span class="n">COSINE</span> <span class="o">=</span> <span class="s2">"cosine"</span>
+</span><span id="DistanceMetric-22"><a href="#DistanceMetric-22"><span class="linenos">22</span></a>    <span class="n">EUCLIDEAN</span> <span class="o">=</span> <span class="s2">"l2"</span>
+</span><span id="DistanceMetric-23"><a href="#DistanceMetric-23"><span class="linenos">23</span></a>    <span class="n">INNER_PRODUCT</span> <span class="o">=</span> <span class="s2">"inner_product"</span>
+</span><span id="DistanceMetric-24"><a href="#DistanceMetric-24"><span class="linenos">24</span></a>
+</span><span id="DistanceMetric-25"><a href="#DistanceMetric-25"><span class="linenos">25</span></a>    <span class="nd">@property</span>
+</span><span id="DistanceMetric-26"><a href="#DistanceMetric-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">operator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="DistanceMetric-27"><a href="#DistanceMetric-27"><span class="linenos">27</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">"cosine"</span><span class="p">:</span> <span class="s2">"&lt;=&gt;"</span><span class="p">,</span> <span class="s2">"l2"</span><span class="p">:</span> <span class="s2">"&lt;-&gt;"</span><span class="p">,</span> <span class="s2">"inner_product"</span><span class="p">:</span> <span class="s2">"&lt;#&gt;"</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+</span><span id="DistanceMetric-28"><a href="#DistanceMetric-28"><span class="linenos">28</span></a>
+</span><span id="DistanceMetric-29"><a href="#DistanceMetric-29"><span class="linenos">29</span></a>    <span class="nd">@property</span>
+</span><span id="DistanceMetric-30"><a href="#DistanceMetric-30"><span class="linenos">30</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">opclass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="DistanceMetric-31"><a href="#DistanceMetric-31"><span class="linenos">31</span></a><span class="w">        </span><span class="sd">"""Return the pgvector opclass name for this distance metric."""</span>
+</span><span id="DistanceMetric-32"><a href="#DistanceMetric-32"><span class="linenos">32</span></a>        <span class="k">return</span> <span class="p">{</span>
+</span><span id="DistanceMetric-33"><a href="#DistanceMetric-33"><span class="linenos">33</span></a>            <span class="s2">"cosine"</span><span class="p">:</span> <span class="s2">"vector_cosine_ops"</span><span class="p">,</span>
+</span><span id="DistanceMetric-34"><a href="#DistanceMetric-34"><span class="linenos">34</span></a>            <span class="s2">"l2"</span><span class="p">:</span> <span class="s2">"vector_l2_ops"</span><span class="p">,</span>
+</span><span id="DistanceMetric-35"><a href="#DistanceMetric-35"><span class="linenos">35</span></a>            <span class="s2">"inner_product"</span><span class="p">:</span> <span class="s2">"vector_ip_ops"</span><span class="p">,</span>
+</span><span id="DistanceMetric-36"><a href="#DistanceMetric-36"><span class="linenos">36</span></a>        <span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+</span><span id="DistanceMetric-37"><a href="#DistanceMetric-37"><span class="linenos">37</span></a>
+</span><span id="DistanceMetric-38"><a href="#DistanceMetric-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="DistanceMetric-39"><a href="#DistanceMetric-39"><span class="linenos">39</span></a>        <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">DistanceMetric</span><span class="o">.</span><span class="n">COSINE</span><span class="p">:</span>
+</span><span id="DistanceMetric-40"><a href="#DistanceMetric-40"><span class="linenos">40</span></a>            <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">distance</span>
+</span><span id="DistanceMetric-41"><a href="#DistanceMetric-41"><span class="linenos">41</span></a>        <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">DistanceMetric</span><span class="o">.</span><span class="n">INNER_PRODUCT</span><span class="p">:</span>
+</span><span id="DistanceMetric-42"><a href="#DistanceMetric-42"><span class="linenos">42</span></a>            <span class="k">return</span> <span class="o">-</span><span class="n">distance</span>
+</span><span id="DistanceMetric-43"><a href="#DistanceMetric-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">distance</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Vector distance metrics for pgvector operations.</p>
+</div>
+
+
+                            <div id="DistanceMetric.COSINE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">COSINE</span>        =
+<span class="default_value">&lt;<a href="#DistanceMetric.COSINE">DistanceMetric.COSINE</a>: &#39;cosine&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DistanceMetric.COSINE"></a>
+    
+    
+
+                            </div>
+                            <div id="DistanceMetric.EUCLIDEAN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">EUCLIDEAN</span>        =
+<span class="default_value">&lt;<a href="#DistanceMetric.EUCLIDEAN">DistanceMetric.EUCLIDEAN</a>: &#39;l2&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DistanceMetric.EUCLIDEAN"></a>
+    
+    
+
+                            </div>
+                            <div id="DistanceMetric.INNER_PRODUCT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">INNER_PRODUCT</span>        =
+<span class="default_value">&lt;<a href="#DistanceMetric.INNER_PRODUCT">DistanceMetric.INNER_PRODUCT</a>: &#39;inner_product&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DistanceMetric.INNER_PRODUCT"></a>
+    
+    
+
+                            </div>
+                            <div id="DistanceMetric.operator" class="classattr">
+                                        <input id="DistanceMetric.operator-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">operator</span><span class="annotation">: str</span>
+
+                <label class="view-source-button" for="DistanceMetric.operator-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DistanceMetric.operator"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DistanceMetric.operator-25"><a href="#DistanceMetric.operator-25"><span class="linenos">25</span></a>    <span class="nd">@property</span>
+</span><span id="DistanceMetric.operator-26"><a href="#DistanceMetric.operator-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">operator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="DistanceMetric.operator-27"><a href="#DistanceMetric.operator-27"><span class="linenos">27</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">"cosine"</span><span class="p">:</span> <span class="s2">"&lt;=&gt;"</span><span class="p">,</span> <span class="s2">"l2"</span><span class="p">:</span> <span class="s2">"&lt;-&gt;"</span><span class="p">,</span> <span class="s2">"inner_product"</span><span class="p">:</span> <span class="s2">"&lt;#&gt;"</span><span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="DistanceMetric.opclass" class="classattr">
+                                        <input id="DistanceMetric.opclass-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">opclass</span><span class="annotation">: str</span>
+
+                <label class="view-source-button" for="DistanceMetric.opclass-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DistanceMetric.opclass"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DistanceMetric.opclass-29"><a href="#DistanceMetric.opclass-29"><span class="linenos">29</span></a>    <span class="nd">@property</span>
+</span><span id="DistanceMetric.opclass-30"><a href="#DistanceMetric.opclass-30"><span class="linenos">30</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">opclass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="DistanceMetric.opclass-31"><a href="#DistanceMetric.opclass-31"><span class="linenos">31</span></a><span class="w">        </span><span class="sd">"""Return the pgvector opclass name for this distance metric."""</span>
+</span><span id="DistanceMetric.opclass-32"><a href="#DistanceMetric.opclass-32"><span class="linenos">32</span></a>        <span class="k">return</span> <span class="p">{</span>
+</span><span id="DistanceMetric.opclass-33"><a href="#DistanceMetric.opclass-33"><span class="linenos">33</span></a>            <span class="s2">"cosine"</span><span class="p">:</span> <span class="s2">"vector_cosine_ops"</span><span class="p">,</span>
+</span><span id="DistanceMetric.opclass-34"><a href="#DistanceMetric.opclass-34"><span class="linenos">34</span></a>            <span class="s2">"l2"</span><span class="p">:</span> <span class="s2">"vector_l2_ops"</span><span class="p">,</span>
+</span><span id="DistanceMetric.opclass-35"><a href="#DistanceMetric.opclass-35"><span class="linenos">35</span></a>            <span class="s2">"inner_product"</span><span class="p">:</span> <span class="s2">"vector_ip_ops"</span><span class="p">,</span>
+</span><span id="DistanceMetric.opclass-36"><a href="#DistanceMetric.opclass-36"><span class="linenos">36</span></a>        <span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Return the pgvector opclass name for this distance metric.</p>
+</div>
+
+
+                            </div>
+                            <div id="DistanceMetric.to_similarity" class="classattr">
+                                        <input id="DistanceMetric.to_similarity-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">to_similarity</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">distance</span><span class="p">:</span> <span class="nb">float</span></span><span class="return-annotation">) -> <span class="nb">float</span>:</span></span>
+
+                <label class="view-source-button" for="DistanceMetric.to_similarity-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DistanceMetric.to_similarity"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DistanceMetric.to_similarity-38"><a href="#DistanceMetric.to_similarity-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="DistanceMetric.to_similarity-39"><a href="#DistanceMetric.to_similarity-39"><span class="linenos">39</span></a>        <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">DistanceMetric</span><span class="o">.</span><span class="n">COSINE</span><span class="p">:</span>
+</span><span id="DistanceMetric.to_similarity-40"><a href="#DistanceMetric.to_similarity-40"><span class="linenos">40</span></a>            <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">distance</span>
+</span><span id="DistanceMetric.to_similarity-41"><a href="#DistanceMetric.to_similarity-41"><span class="linenos">41</span></a>        <span class="k">if</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">DistanceMetric</span><span class="o">.</span><span class="n">INNER_PRODUCT</span><span class="p">:</span>
+</span><span id="DistanceMetric.to_similarity-42"><a href="#DistanceMetric.to_similarity-42"><span class="linenos">42</span></a>            <span class="k">return</span> <span class="o">-</span><span class="n">distance</span>
+</span><span id="DistanceMetric.to_similarity-43"><a href="#DistanceMetric.to_similarity-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">distance</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                </section>
+                <section id="IsolationLevel">
+                            <input id="IsolationLevel-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">IsolationLevel</span><wbr>(<span class="base">enum.StrEnum</span>):
+
+                <label class="view-source-button" for="IsolationLevel-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#IsolationLevel"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="IsolationLevel-11"><a href="#IsolationLevel-11"><span class="linenos">11</span></a><span class="k">class</span><span class="w"> </span><span class="nc">IsolationLevel</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="IsolationLevel-12"><a href="#IsolationLevel-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">"""CockroachDB transaction isolation levels."""</span>
+</span><span id="IsolationLevel-13"><a href="#IsolationLevel-13"><span class="linenos">13</span></a>
+</span><span id="IsolationLevel-14"><a href="#IsolationLevel-14"><span class="linenos">14</span></a>    <span class="n">SERIALIZABLE</span> <span class="o">=</span> <span class="s2">"serializable"</span>
+</span><span id="IsolationLevel-15"><a href="#IsolationLevel-15"><span class="linenos">15</span></a>    <span class="n">READ_COMMITTED</span> <span class="o">=</span> <span class="s2">"read committed"</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>CockroachDB transaction isolation levels.</p>
+</div>
+
+
+                            <div id="IsolationLevel.SERIALIZABLE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">SERIALIZABLE</span>        =
+<span class="default_value">&lt;<a href="#IsolationLevel.SERIALIZABLE">IsolationLevel.SERIALIZABLE</a>: &#39;serializable&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#IsolationLevel.SERIALIZABLE"></a>
+    
+    
+
+                            </div>
+                            <div id="IsolationLevel.READ_COMMITTED" class="classattr">
+                                <div class="attr variable">
+            <span class="name">READ_COMMITTED</span>        =
+<span class="default_value">&lt;<a href="#IsolationLevel.READ_COMMITTED">IsolationLevel.READ_COMMITTED</a>: &#39;read committed&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#IsolationLevel.READ_COMMITTED"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="RegionValidationError">
+                            <input id="RegionValidationError-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">RegionValidationError</span><wbr>(<span class="base"><a href="#CockroachDBError">cockroachdb.CockroachDBError</a></span>):
+
+                <label class="view-source-button" for="RegionValidationError-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#RegionValidationError"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RegionValidationError-30"><a href="#RegionValidationError-30"><span class="linenos">30</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RegionValidationError</span><span class="p">(</span><span class="n">CockroachDBError</span><span class="p">):</span>
+</span><span id="RegionValidationError-31"><a href="#RegionValidationError-31"><span class="linenos">31</span></a><span class="w">    </span><span class="sd">"""Raised when a region name fails validation."""</span>
+</span><span id="RegionValidationError-32"><a href="#RegionValidationError-32"><span class="linenos">32</span></a>
+</span><span id="RegionValidationError-33"><a href="#RegionValidationError-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="RegionValidationError-34"><a href="#RegionValidationError-34"><span class="linenos">34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">region</span>
+</span><span id="RegionValidationError-35"><a href="#RegionValidationError-35"><span class="linenos">35</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="o">=</span> <span class="n">reason</span>
+</span><span id="RegionValidationError-36"><a href="#RegionValidationError-36"><span class="linenos">36</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid region '</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Raised when a region name fails validation.</p>
+</div>
+
+
+                            <div id="RegionValidationError.__init__" class="classattr">
+                                        <input id="RegionValidationError.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">RegionValidationError</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">region</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">reason</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
+
+                <label class="view-source-button" for="RegionValidationError.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#RegionValidationError.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RegionValidationError.__init__-33"><a href="#RegionValidationError.__init__-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="RegionValidationError.__init__-34"><a href="#RegionValidationError.__init__-34"><span class="linenos">34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">region</span>
+</span><span id="RegionValidationError.__init__-35"><a href="#RegionValidationError.__init__-35"><span class="linenos">35</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="o">=</span> <span class="n">reason</span>
+</span><span id="RegionValidationError.__init__-36"><a href="#RegionValidationError.__init__-36"><span class="linenos">36</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid region '</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="RegionValidationError.region" class="classattr">
+                                <div class="attr variable">
+            <span class="name">region</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RegionValidationError.region"></a>
+    
+    
+
+                            </div>
+                            <div id="RegionValidationError.reason" class="classattr">
+                                <div class="attr variable">
+            <span class="name">reason</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RegionValidationError.reason"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="RetryPolicy">
+                            <input id="RetryPolicy-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+                    <div class="decorator decorator-dataclass">@dataclass(frozen=True)</div>
+
+    <span class="def">class</span>
+    <span class="name">RetryPolicy</span>:
+
+                <label class="view-source-button" for="RetryPolicy-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#RetryPolicy"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RetryPolicy-70"><a href="#RetryPolicy-70"><span class="linenos">70</span></a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="RetryPolicy-71"><a href="#RetryPolicy-71"><span class="linenos">71</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RetryPolicy</span><span class="p">:</span>
+</span><span id="RetryPolicy-72"><a href="#RetryPolicy-72"><span class="linenos">72</span></a><span class="w">    </span><span class="sd">"""Configuration for retry behavior on serialization conflicts."""</span>
+</span><span id="RetryPolicy-73"><a href="#RetryPolicy-73"><span class="linenos">73</span></a>
+</span><span id="RetryPolicy-74"><a href="#RetryPolicy-74"><span class="linenos">74</span></a>    <span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="RetryPolicy-75"><a href="#RetryPolicy-75"><span class="linenos">75</span></a>    <span class="n">base_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+</span><span id="RetryPolicy-76"><a href="#RetryPolicy-76"><span class="linenos">76</span></a>    <span class="n">max_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>
+</span><span id="RetryPolicy-77"><a href="#RetryPolicy-77"><span class="linenos">77</span></a>    <span class="n">multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>
+</span><span id="RetryPolicy-78"><a href="#RetryPolicy-78"><span class="linenos">78</span></a>    <span class="n">jitter_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Configuration for retry behavior on serialization conflicts.</p>
+</div>
+
+
+                            <div id="RetryPolicy.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">RetryPolicy</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>,</span><span class="param">	<span class="n">base_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>,</span><span class="param">	<span class="n">max_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>,</span><span class="param">	<span class="n">multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>,</span><span class="param">	<span class="n">jitter_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span></span>)</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RetryPolicy.__init__"></a>
+    
+    
+
+                            </div>
+                            <div id="RetryPolicy.max_retries" class="classattr">
+                                <div class="attr variable">
+            <span class="name">max_retries</span><span class="annotation">: int</span>        =
+<span class="default_value">3</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RetryPolicy.max_retries"></a>
+    
+    
+
+                            </div>
+                            <div id="RetryPolicy.base_delay" class="classattr">
+                                <div class="attr variable">
+            <span class="name">base_delay</span><span class="annotation">: float</span>        =
+<span class="default_value">0.1</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RetryPolicy.base_delay"></a>
+    
+    
+
+                            </div>
+                            <div id="RetryPolicy.max_delay" class="classattr">
+                                <div class="attr variable">
+            <span class="name">max_delay</span><span class="annotation">: float</span>        =
+<span class="default_value">5.0</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RetryPolicy.max_delay"></a>
+    
+    
+
+                            </div>
+                            <div id="RetryPolicy.multiplier" class="classattr">
+                                <div class="attr variable">
+            <span class="name">multiplier</span><span class="annotation">: float</span>        =
+<span class="default_value">2.0</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RetryPolicy.multiplier"></a>
+    
+    
+
+                            </div>
+                            <div id="RetryPolicy.jitter_factor" class="classattr">
+                                <div class="attr variable">
+            <span class="name">jitter_factor</span><span class="annotation">: float</span>        =
+<span class="default_value">0.1</span>
+
+        
+    </div>
+    <a class="headerlink" href="#RetryPolicy.jitter_factor"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="TransactionOutcome">
+                            <input id="TransactionOutcome-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">TransactionOutcome</span><wbr>(<span class="base">enum.StrEnum</span>):
+
+                <label class="view-source-button" for="TransactionOutcome-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#TransactionOutcome"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TransactionOutcome-46"><a href="#TransactionOutcome-46"><span class="linenos">46</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TransactionOutcome</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="TransactionOutcome-47"><a href="#TransactionOutcome-47"><span class="linenos">47</span></a><span class="w">    </span><span class="sd">"""Outcome of a CockroachDB transaction execution."""</span>
+</span><span id="TransactionOutcome-48"><a href="#TransactionOutcome-48"><span class="linenos">48</span></a>
+</span><span id="TransactionOutcome-49"><a href="#TransactionOutcome-49"><span class="linenos">49</span></a>    <span class="n">COMMITTED</span> <span class="o">=</span> <span class="s2">"committed"</span>
+</span><span id="TransactionOutcome-50"><a href="#TransactionOutcome-50"><span class="linenos">50</span></a>    <span class="n">RETRIED</span> <span class="o">=</span> <span class="s2">"retried"</span>
+</span><span id="TransactionOutcome-51"><a href="#TransactionOutcome-51"><span class="linenos">51</span></a>    <span class="n">FAILED</span> <span class="o">=</span> <span class="s2">"failed"</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Outcome of a CockroachDB transaction execution.</p>
+</div>
+
+
+                            <div id="TransactionOutcome.COMMITTED" class="classattr">
+                                <div class="attr variable">
+            <span class="name">COMMITTED</span>        =
+<span class="default_value">&lt;<a href="#TransactionOutcome.COMMITTED">TransactionOutcome.COMMITTED</a>: &#39;committed&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#TransactionOutcome.COMMITTED"></a>
+    
+    
+
+                            </div>
+                            <div id="TransactionOutcome.RETRIED" class="classattr">
+                                <div class="attr variable">
+            <span class="name">RETRIED</span>        =
+<span class="default_value">&lt;<a href="#TransactionOutcome.RETRIED">TransactionOutcome.RETRIED</a>: &#39;retried&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#TransactionOutcome.RETRIED"></a>
+    
+    
+
+                            </div>
+                            <div id="TransactionOutcome.FAILED" class="classattr">
+                                <div class="attr variable">
+            <span class="name">FAILED</span>        =
+<span class="default_value">&lt;<a href="#TransactionOutcome.FAILED">TransactionOutcome.FAILED</a>: &#39;failed&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#TransactionOutcome.FAILED"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="__version__">
+                    <div class="attr variable">
+            <span class="name">__version__</span>        =
+<span class="default_value">&#39;0.1.0&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#__version__"></a>
+    
+    
+
+                </section>
+                <section id="changefeed_handler">
+                            <input id="changefeed_handler-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">changefeed_handler</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">table</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">operations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="changefeed_handler-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#changefeed_handler"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="changefeed_handler-169"><a href="#changefeed_handler-169"><span class="linenos">169</span></a><span class="k">def</span><span class="w"> </span><span class="nf">changefeed_handler</span><span class="p">(</span>
+</span><span id="changefeed_handler-170"><a href="#changefeed_handler-170"><span class="linenos">170</span></a>    <span class="n">table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="changefeed_handler-171"><a href="#changefeed_handler-171"><span class="linenos">171</span></a>    <span class="n">operations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="changefeed_handler-172"><a href="#changefeed_handler-172"><span class="linenos">172</span></a>    <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="changefeed_handler-173"><a href="#changefeed_handler-173"><span class="linenos">173</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+</span><span id="changefeed_handler-174"><a href="#changefeed_handler-174"><span class="linenos">174</span></a><span class="w">    </span><span class="sd">"""Register a function as a CDC changefeed webhook handler.</span>
+</span><span id="changefeed_handler-175"><a href="#changefeed_handler-175"><span class="linenos">175</span></a>
+</span><span id="changefeed_handler-176"><a href="#changefeed_handler-176"><span class="linenos">176</span></a><span class="sd">    Args:</span>
+</span><span id="changefeed_handler-177"><a href="#changefeed_handler-177"><span class="linenos">177</span></a><span class="sd">        table: The CockroachDB table to watch.</span>
+</span><span id="changefeed_handler-178"><a href="#changefeed_handler-178"><span class="linenos">178</span></a><span class="sd">        operations: List of operations to handle ('insert', 'update', 'delete').</span>
+</span><span id="changefeed_handler-179"><a href="#changefeed_handler-179"><span class="linenos">179</span></a><span class="sd">        endpoint: Custom webhook endpoint path.</span>
+</span><span id="changefeed_handler-180"><a href="#changefeed_handler-180"><span class="linenos">180</span></a><span class="sd">    """</span>
+</span><span id="changefeed_handler-181"><a href="#changefeed_handler-181"><span class="linenos">181</span></a>
+</span><span id="changefeed_handler-182"><a href="#changefeed_handler-182"><span class="linenos">182</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+</span><span id="changefeed_handler-183"><a href="#changefeed_handler-183"><span class="linenos">183</span></a>        <span class="n">fn</span><span class="o">.</span><span class="n">__crdb_changefeed__</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="changefeed_handler-184"><a href="#changefeed_handler-184"><span class="linenos">184</span></a>            <span class="s2">"table"</span><span class="p">:</span> <span class="n">table</span><span class="p">,</span>
+</span><span id="changefeed_handler-185"><a href="#changefeed_handler-185"><span class="linenos">185</span></a>            <span class="s2">"operations"</span><span class="p">:</span> <span class="n">operations</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">"insert"</span><span class="p">,</span> <span class="s2">"update"</span><span class="p">,</span> <span class="s2">"delete"</span><span class="p">],</span>
+</span><span id="changefeed_handler-186"><a href="#changefeed_handler-186"><span class="linenos">186</span></a>            <span class="s2">"endpoint"</span><span class="p">:</span> <span class="n">endpoint</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">"/webhooks/</span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+</span><span id="changefeed_handler-187"><a href="#changefeed_handler-187"><span class="linenos">187</span></a>        <span class="p">}</span>
+</span><span id="changefeed_handler-188"><a href="#changefeed_handler-188"><span class="linenos">188</span></a>        <span class="k">return</span> <span class="n">fn</span>
+</span><span id="changefeed_handler-189"><a href="#changefeed_handler-189"><span class="linenos">189</span></a>
+</span><span id="changefeed_handler-190"><a href="#changefeed_handler-190"><span class="linenos">190</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Register a function as a CDC changefeed webhook handler.</p>
+
+<p>Args:
+    table: The CockroachDB table to watch.
+    operations: List of operations to handle ('insert', 'update', 'delete').
+    endpoint: Custom webhook endpoint path.</p>
+</div>
+
+
+                </section>
+                <section id="crdb_region">
+                            <input id="crdb_region-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">crdb_region</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">region</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="crdb_region-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#crdb_region"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="crdb_region-124"><a href="#crdb_region-124"><span class="linenos">124</span></a><span class="k">def</span><span class="w"> </span><span class="nf">crdb_region</span><span class="p">(</span><span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+</span><span id="crdb_region-125"><a href="#crdb_region-125"><span class="linenos">125</span></a><span class="w">    </span><span class="sd">"""Pin execution to a specific CockroachDB region.</span>
+</span><span id="crdb_region-126"><a href="#crdb_region-126"><span class="linenos">126</span></a>
+</span><span id="crdb_region-127"><a href="#crdb_region-127"><span class="linenos">127</span></a><span class="sd">    The region is set via SET crdb_region before the operation executes,</span>
+</span><span id="crdb_region-128"><a href="#crdb_region-128"><span class="linenos">128</span></a><span class="sd">    and propagated through contextvars.</span>
+</span><span id="crdb_region-129"><a href="#crdb_region-129"><span class="linenos">129</span></a>
+</span><span id="crdb_region-130"><a href="#crdb_region-130"><span class="linenos">130</span></a><span class="sd">    Args:</span>
+</span><span id="crdb_region-131"><a href="#crdb_region-131"><span class="linenos">131</span></a><span class="sd">        region: CockroachDB region identifier (e.g., 'us-east1').</span>
+</span><span id="crdb_region-132"><a href="#crdb_region-132"><span class="linenos">132</span></a><span class="sd">    """</span>
+</span><span id="crdb_region-133"><a href="#crdb_region-133"><span class="linenos">133</span></a>
+</span><span id="crdb_region-134"><a href="#crdb_region-134"><span class="linenos">134</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+</span><span id="crdb_region-135"><a href="#crdb_region-135"><span class="linenos">135</span></a>        <span class="n">fn</span><span class="o">.</span><span class="n">__crdb_region__</span> <span class="o">=</span> <span class="n">region</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="crdb_region-136"><a href="#crdb_region-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="n">fn</span>
+</span><span id="crdb_region-137"><a href="#crdb_region-137"><span class="linenos">137</span></a>
+</span><span id="crdb_region-138"><a href="#crdb_region-138"><span class="linenos">138</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Pin execution to a specific CockroachDB region.</p>
+
+<p>The region is set via SET crdb_region before the operation executes,
+and propagated through contextvars.</p>
+
+<p>Args:
+    region: CockroachDB region identifier (e.g., 'us-east1').</p>
+</div>
+
+
+                </section>
+                <section id="crdb_retry">
+                            <input id="crdb_retry-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">crdb_retry</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>,</span><span class="param">	<span class="n">base_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>,</span><span class="param">	<span class="n">max_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>,</span><span class="param">	<span class="n">multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>,</span><span class="param">	<span class="n">jitter_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>,</span><span class="param">	<span class="n">isolation</span><span class="p">:</span> <span class="n"><a href="#IsolationLevel">IsolationLevel</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n"><a href="#IsolationLevel.SERIALIZABLE">IsolationLevel.SERIALIZABLE</a></span><span class="p">:</span> <span class="s1">'serializable'</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">on_retry</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="crdb_retry-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#crdb_retry"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="crdb_retry-28"><a href="#crdb_retry-28"><span class="linenos"> 28</span></a><span class="k">def</span><span class="w"> </span><span class="nf">crdb_retry</span><span class="p">(</span>
+</span><span id="crdb_retry-29"><a href="#crdb_retry-29"><span class="linenos"> 29</span></a>    <span class="n">max_retries</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+</span><span id="crdb_retry-30"><a href="#crdb_retry-30"><span class="linenos"> 30</span></a>    <span class="n">base_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+</span><span id="crdb_retry-31"><a href="#crdb_retry-31"><span class="linenos"> 31</span></a>    <span class="n">max_delay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+</span><span id="crdb_retry-32"><a href="#crdb_retry-32"><span class="linenos"> 32</span></a>    <span class="n">multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+</span><span id="crdb_retry-33"><a href="#crdb_retry-33"><span class="linenos"> 33</span></a>    <span class="n">jitter_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+</span><span id="crdb_retry-34"><a href="#crdb_retry-34"><span class="linenos"> 34</span></a>    <span class="n">isolation</span><span class="p">:</span> <span class="n">IsolationLevel</span> <span class="o">=</span> <span class="n">IsolationLevel</span><span class="o">.</span><span class="n">SERIALIZABLE</span><span class="p">,</span>
+</span><span id="crdb_retry-35"><a href="#crdb_retry-35"><span class="linenos"> 35</span></a>    <span class="n">on_retry</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="crdb_retry-36"><a href="#crdb_retry-36"><span class="linenos"> 36</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+</span><span id="crdb_retry-37"><a href="#crdb_retry-37"><span class="linenos"> 37</span></a><span class="w">    </span><span class="sd">"""Retry on CockroachDB serialization errors (SQLSTATE 40001).</span>
+</span><span id="crdb_retry-38"><a href="#crdb_retry-38"><span class="linenos"> 38</span></a>
+</span><span id="crdb_retry-39"><a href="#crdb_retry-39"><span class="linenos"> 39</span></a><span class="sd">    Supports both sync and async functions. Each retry executes the</span>
+</span><span id="crdb_retry-40"><a href="#crdb_retry-40"><span class="linenos"> 40</span></a><span class="sd">    entire decorated function, creating a fresh transaction as required</span>
+</span><span id="crdb_retry-41"><a href="#crdb_retry-41"><span class="linenos"> 41</span></a><span class="sd">    by CockroachDB's retry protocol.</span>
+</span><span id="crdb_retry-42"><a href="#crdb_retry-42"><span class="linenos"> 42</span></a>
+</span><span id="crdb_retry-43"><a href="#crdb_retry-43"><span class="linenos"> 43</span></a><span class="sd">    Args:</span>
+</span><span id="crdb_retry-44"><a href="#crdb_retry-44"><span class="linenos"> 44</span></a><span class="sd">        max_retries: Maximum number of retry attempts.</span>
+</span><span id="crdb_retry-45"><a href="#crdb_retry-45"><span class="linenos"> 45</span></a><span class="sd">        base_delay: Initial delay in seconds before first retry.</span>
+</span><span id="crdb_retry-46"><a href="#crdb_retry-46"><span class="linenos"> 46</span></a><span class="sd">        max_delay: Maximum delay cap in seconds.</span>
+</span><span id="crdb_retry-47"><a href="#crdb_retry-47"><span class="linenos"> 47</span></a><span class="sd">        multiplier: Exponential backoff multiplier.</span>
+</span><span id="crdb_retry-48"><a href="#crdb_retry-48"><span class="linenos"> 48</span></a><span class="sd">        jitter_factor: Random jitter as fraction of delay (0.0 to 1.0).</span>
+</span><span id="crdb_retry-49"><a href="#crdb_retry-49"><span class="linenos"> 49</span></a><span class="sd">        isolation: Transaction isolation level.</span>
+</span><span id="crdb_retry-50"><a href="#crdb_retry-50"><span class="linenos"> 50</span></a><span class="sd">        on_retry: Optional callback invoked on each retry with (attempt, error).</span>
+</span><span id="crdb_retry-51"><a href="#crdb_retry-51"><span class="linenos"> 51</span></a><span class="sd">    """</span>
+</span><span id="crdb_retry-52"><a href="#crdb_retry-52"><span class="linenos"> 52</span></a>
+</span><span id="crdb_retry-53"><a href="#crdb_retry-53"><span class="linenos"> 53</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+</span><span id="crdb_retry-54"><a href="#crdb_retry-54"><span class="linenos"> 54</span></a>        <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+</span><span id="crdb_retry-55"><a href="#crdb_retry-55"><span class="linenos"> 55</span></a>
+</span><span id="crdb_retry-56"><a href="#crdb_retry-56"><span class="linenos"> 56</span></a>            <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</span><span id="crdb_retry-57"><a href="#crdb_retry-57"><span class="linenos"> 57</span></a>            <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">P</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">P</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+</span><span id="crdb_retry-58"><a href="#crdb_retry-58"><span class="linenos"> 58</span></a>                <span class="n">last_err</span><span class="p">:</span> <span class="ne">Exception</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="crdb_retry-59"><a href="#crdb_retry-59"><span class="linenos"> 59</span></a>                <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="crdb_retry-60"><a href="#crdb_retry-60"><span class="linenos"> 60</span></a>                    <span class="k">try</span><span class="p">:</span>
+</span><span id="crdb_retry-61"><a href="#crdb_retry-61"><span class="linenos"> 61</span></a>                        <span class="k">return</span> <span class="k">await</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[no-any-return]</span>
+</span><span id="crdb_retry-62"><a href="#crdb_retry-62"><span class="linenos"> 62</span></a>                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="crdb_retry-63"><a href="#crdb_retry-63"><span class="linenos"> 63</span></a>                        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_retryable_error</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+</span><span id="crdb_retry-64"><a href="#crdb_retry-64"><span class="linenos"> 64</span></a>                            <span class="k">raise</span>
+</span><span id="crdb_retry-65"><a href="#crdb_retry-65"><span class="linenos"> 65</span></a>                        <span class="n">last_err</span> <span class="o">=</span> <span class="n">e</span>
+</span><span id="crdb_retry-66"><a href="#crdb_retry-66"><span class="linenos"> 66</span></a>                        <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+</span><span id="crdb_retry-67"><a href="#crdb_retry-67"><span class="linenos"> 67</span></a>                            <span class="k">if</span> <span class="n">on_retry</span><span class="p">:</span>
+</span><span id="crdb_retry-68"><a href="#crdb_retry-68"><span class="linenos"> 68</span></a>                                <span class="n">on_retry</span><span class="p">(</span><span class="n">attempt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</span><span id="crdb_retry-69"><a href="#crdb_retry-69"><span class="linenos"> 69</span></a>                            <span class="n">delay</span> <span class="o">=</span> <span class="n">_calc_delay</span><span class="p">(</span>
+</span><span id="crdb_retry-70"><a href="#crdb_retry-70"><span class="linenos"> 70</span></a>                                <span class="n">attempt</span><span class="p">,</span> <span class="n">base_delay</span><span class="p">,</span> <span class="n">max_delay</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">jitter_factor</span>
+</span><span id="crdb_retry-71"><a href="#crdb_retry-71"><span class="linenos"> 71</span></a>                            <span class="p">)</span>
+</span><span id="crdb_retry-72"><a href="#crdb_retry-72"><span class="linenos"> 72</span></a>                            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</span><span id="crdb_retry-73"><a href="#crdb_retry-73"><span class="linenos"> 73</span></a>                <span class="k">raise</span> <span class="n">CockroachDBRetryExhausted</span><span class="p">(</span><span class="n">max_retries</span><span class="p">,</span> <span class="n">last_err</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">last_err</span>
+</span><span id="crdb_retry-74"><a href="#crdb_retry-74"><span class="linenos"> 74</span></a>
+</span><span id="crdb_retry-75"><a href="#crdb_retry-75"><span class="linenos"> 75</span></a>            <span class="n">async_wrapper</span><span class="o">.</span><span class="n">__crdb_retry__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="crdb_retry-76"><a href="#crdb_retry-76"><span class="linenos"> 76</span></a>            <span class="n">async_wrapper</span><span class="o">.</span><span class="n">__crdb_isolation__</span> <span class="o">=</span> <span class="n">isolation</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="crdb_retry-77"><a href="#crdb_retry-77"><span class="linenos"> 77</span></a>            <span class="k">return</span> <span class="n">async_wrapper</span>  <span class="c1"># type: ignore[return-value]</span>
+</span><span id="crdb_retry-78"><a href="#crdb_retry-78"><span class="linenos"> 78</span></a>
+</span><span id="crdb_retry-79"><a href="#crdb_retry-79"><span class="linenos"> 79</span></a>        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</span><span id="crdb_retry-80"><a href="#crdb_retry-80"><span class="linenos"> 80</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">sync_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">P</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">P</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+</span><span id="crdb_retry-81"><a href="#crdb_retry-81"><span class="linenos"> 81</span></a>            <span class="n">last_err</span><span class="p">:</span> <span class="ne">Exception</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="crdb_retry-82"><a href="#crdb_retry-82"><span class="linenos"> 82</span></a>            <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="crdb_retry-83"><a href="#crdb_retry-83"><span class="linenos"> 83</span></a>                <span class="k">try</span><span class="p">:</span>
+</span><span id="crdb_retry-84"><a href="#crdb_retry-84"><span class="linenos"> 84</span></a>                    <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="crdb_retry-85"><a href="#crdb_retry-85"><span class="linenos"> 85</span></a>                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="crdb_retry-86"><a href="#crdb_retry-86"><span class="linenos"> 86</span></a>                    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_retryable_error</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+</span><span id="crdb_retry-87"><a href="#crdb_retry-87"><span class="linenos"> 87</span></a>                        <span class="k">raise</span>
+</span><span id="crdb_retry-88"><a href="#crdb_retry-88"><span class="linenos"> 88</span></a>                    <span class="n">last_err</span> <span class="o">=</span> <span class="n">e</span>
+</span><span id="crdb_retry-89"><a href="#crdb_retry-89"><span class="linenos"> 89</span></a>                    <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span><span class="p">:</span>
+</span><span id="crdb_retry-90"><a href="#crdb_retry-90"><span class="linenos"> 90</span></a>                        <span class="k">if</span> <span class="n">on_retry</span><span class="p">:</span>
+</span><span id="crdb_retry-91"><a href="#crdb_retry-91"><span class="linenos"> 91</span></a>                            <span class="n">on_retry</span><span class="p">(</span><span class="n">attempt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</span><span id="crdb_retry-92"><a href="#crdb_retry-92"><span class="linenos"> 92</span></a>                        <span class="n">delay</span> <span class="o">=</span> <span class="n">_calc_delay</span><span class="p">(</span>
+</span><span id="crdb_retry-93"><a href="#crdb_retry-93"><span class="linenos"> 93</span></a>                            <span class="n">attempt</span><span class="p">,</span> <span class="n">base_delay</span><span class="p">,</span> <span class="n">max_delay</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">jitter_factor</span>
+</span><span id="crdb_retry-94"><a href="#crdb_retry-94"><span class="linenos"> 94</span></a>                        <span class="p">)</span>
+</span><span id="crdb_retry-95"><a href="#crdb_retry-95"><span class="linenos"> 95</span></a>                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</span><span id="crdb_retry-96"><a href="#crdb_retry-96"><span class="linenos"> 96</span></a>            <span class="k">raise</span> <span class="n">CockroachDBRetryExhausted</span><span class="p">(</span><span class="n">max_retries</span><span class="p">,</span> <span class="n">last_err</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">last_err</span>
+</span><span id="crdb_retry-97"><a href="#crdb_retry-97"><span class="linenos"> 97</span></a>
+</span><span id="crdb_retry-98"><a href="#crdb_retry-98"><span class="linenos"> 98</span></a>        <span class="n">sync_wrapper</span><span class="o">.</span><span class="n">__crdb_retry__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="crdb_retry-99"><a href="#crdb_retry-99"><span class="linenos"> 99</span></a>        <span class="n">sync_wrapper</span><span class="o">.</span><span class="n">__crdb_isolation__</span> <span class="o">=</span> <span class="n">isolation</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="crdb_retry-100"><a href="#crdb_retry-100"><span class="linenos">100</span></a>        <span class="k">return</span> <span class="n">sync_wrapper</span>
+</span><span id="crdb_retry-101"><a href="#crdb_retry-101"><span class="linenos">101</span></a>
+</span><span id="crdb_retry-102"><a href="#crdb_retry-102"><span class="linenos">102</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Retry on CockroachDB serialization errors (SQLSTATE 40001).</p>
+
+<p>Supports both sync and async functions. Each retry executes the
+entire decorated function, creating a fresh transaction as required
+by CockroachDB's retry protocol.</p>
+
+<p>Args:
+    max_retries: Maximum number of retry attempts.
+    base_delay: Initial delay in seconds before first retry.
+    max_delay: Maximum delay cap in seconds.
+    multiplier: Exponential backoff multiplier.
+    jitter_factor: Random jitter as fraction of delay (0.0 to 1.0).
+    isolation: Transaction isolation level.
+    on_retry: Optional callback invoked on each retry with (attempt, error).</p>
+</div>
+
+
+                </section>
+                <section id="follower_read">
+                            <input id="follower_read-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">follower_read</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">staleness</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'follower_read_timestamp()'</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="follower_read-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#follower_read"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="follower_read-105"><a href="#follower_read-105"><span class="linenos">105</span></a><span class="k">def</span><span class="w"> </span><span class="nf">follower_read</span><span class="p">(</span>
+</span><span id="follower_read-106"><a href="#follower_read-106"><span class="linenos">106</span></a>    <span class="n">staleness</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"follower_read_timestamp()"</span><span class="p">,</span>
+</span><span id="follower_read-107"><a href="#follower_read-107"><span class="linenos">107</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+</span><span id="follower_read-108"><a href="#follower_read-108"><span class="linenos">108</span></a><span class="w">    </span><span class="sd">"""Execute read queries AS OF SYSTEM TIME for low-latency replica reads.</span>
+</span><span id="follower_read-109"><a href="#follower_read-109"><span class="linenos">109</span></a>
+</span><span id="follower_read-110"><a href="#follower_read-110"><span class="linenos">110</span></a><span class="sd">    The staleness parameter controls freshness — either a built-in function</span>
+</span><span id="follower_read-111"><a href="#follower_read-111"><span class="linenos">111</span></a><span class="sd">    like follower_read_timestamp() or an interval like '-5s'.</span>
+</span><span id="follower_read-112"><a href="#follower_read-112"><span class="linenos">112</span></a>
+</span><span id="follower_read-113"><a href="#follower_read-113"><span class="linenos">113</span></a><span class="sd">    Args:</span>
+</span><span id="follower_read-114"><a href="#follower_read-114"><span class="linenos">114</span></a><span class="sd">        staleness: AS OF SYSTEM TIME expression.</span>
+</span><span id="follower_read-115"><a href="#follower_read-115"><span class="linenos">115</span></a><span class="sd">    """</span>
+</span><span id="follower_read-116"><a href="#follower_read-116"><span class="linenos">116</span></a>
+</span><span id="follower_read-117"><a href="#follower_read-117"><span class="linenos">117</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+</span><span id="follower_read-118"><a href="#follower_read-118"><span class="linenos">118</span></a>        <span class="n">fn</span><span class="o">.</span><span class="n">__crdb_follower_read__</span> <span class="o">=</span> <span class="n">staleness</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="follower_read-119"><a href="#follower_read-119"><span class="linenos">119</span></a>        <span class="k">return</span> <span class="n">fn</span>
+</span><span id="follower_read-120"><a href="#follower_read-120"><span class="linenos">120</span></a>
+</span><span id="follower_read-121"><a href="#follower_read-121"><span class="linenos">121</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Execute read queries AS OF SYSTEM TIME for low-latency replica reads.</p>
+
+<p>The staleness parameter controls freshness — either a built-in function
+like follower_read_timestamp() or an interval like '-5s'.</p>
+
+<p>Args:
+    staleness: AS OF SYSTEM TIME expression.</p>
+</div>
+
+
+                </section>
+                <section id="global_table">
+                            <input id="global_table-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">global_table</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">]</span></span><span class="return-annotation">) -> <span class="nb">type</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">]</span>:</span></span>
+
+                <label class="view-source-button" for="global_table-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#global_table"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="global_table-160"><a href="#global_table-160"><span class="linenos">160</span></a><span class="k">def</span><span class="w"> </span><span class="nf">global_table</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+</span><span id="global_table-161"><a href="#global_table-161"><span class="linenos">161</span></a><span class="w">    </span><span class="sd">"""Mark an entity class as a GLOBAL table (replicated across all regions).</span>
+</span><span id="global_table-162"><a href="#global_table-162"><span class="linenos">162</span></a>
+</span><span id="global_table-163"><a href="#global_table-163"><span class="linenos">163</span></a><span class="sd">    Equivalent to Java's @GlobalTable and .NET's [GlobalTable].</span>
+</span><span id="global_table-164"><a href="#global_table-164"><span class="linenos">164</span></a><span class="sd">    """</span>
+</span><span id="global_table-165"><a href="#global_table-165"><span class="linenos">165</span></a>    <span class="bp">cls</span><span class="o">.</span><span class="n">__crdb_global_table__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="global_table-166"><a href="#global_table-166"><span class="linenos">166</span></a>    <span class="k">return</span> <span class="bp">cls</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Mark an entity class as a GLOBAL table (replicated across all regions).</p>
+
+<p>Equivalent to Java's @GlobalTable and .NET's [GlobalTable].</p>
+</div>
+
+
+                </section>
+                <section id="regional_by_row">
+                            <input id="regional_by_row-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">regional_by_row</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">default_region</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="nb">type</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="nb">type</span><span class="p">[</span><span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="regional_by_row-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#regional_by_row"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="regional_by_row-141"><a href="#regional_by_row-141"><span class="linenos">141</span></a><span class="k">def</span><span class="w"> </span><span class="nf">regional_by_row</span><span class="p">(</span>
+</span><span id="regional_by_row-142"><a href="#regional_by_row-142"><span class="linenos">142</span></a>    <span class="n">default_region</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="regional_by_row-143"><a href="#regional_by_row-143"><span class="linenos">143</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">]],</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+</span><span id="regional_by_row-144"><a href="#regional_by_row-144"><span class="linenos">144</span></a><span class="w">    </span><span class="sd">"""Mark an entity class as REGIONAL BY ROW.</span>
+</span><span id="regional_by_row-145"><a href="#regional_by_row-145"><span class="linenos">145</span></a>
+</span><span id="regional_by_row-146"><a href="#regional_by_row-146"><span class="linenos">146</span></a><span class="sd">    Equivalent to Java's @RegionalByRow and .NET's [RegionalByRow].</span>
+</span><span id="regional_by_row-147"><a href="#regional_by_row-147"><span class="linenos">147</span></a>
+</span><span id="regional_by_row-148"><a href="#regional_by_row-148"><span class="linenos">148</span></a><span class="sd">    Args:</span>
+</span><span id="regional_by_row-149"><a href="#regional_by_row-149"><span class="linenos">149</span></a><span class="sd">        default_region: Default region for new rows.</span>
+</span><span id="regional_by_row-150"><a href="#regional_by_row-150"><span class="linenos">150</span></a><span class="sd">    """</span>
+</span><span id="regional_by_row-151"><a href="#regional_by_row-151"><span class="linenos">151</span></a>
+</span><span id="regional_by_row-152"><a href="#regional_by_row-152"><span class="linenos">152</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+</span><span id="regional_by_row-153"><a href="#regional_by_row-153"><span class="linenos">153</span></a>        <span class="bp">cls</span><span class="o">.</span><span class="n">__crdb_regional_by_row__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="regional_by_row-154"><a href="#regional_by_row-154"><span class="linenos">154</span></a>        <span class="bp">cls</span><span class="o">.</span><span class="n">__crdb_default_region__</span> <span class="o">=</span> <span class="n">default_region</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="regional_by_row-155"><a href="#regional_by_row-155"><span class="linenos">155</span></a>        <span class="k">return</span> <span class="bp">cls</span>
+</span><span id="regional_by_row-156"><a href="#regional_by_row-156"><span class="linenos">156</span></a>
+</span><span id="regional_by_row-157"><a href="#regional_by_row-157"><span class="linenos">157</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Mark an entity class as REGIONAL BY ROW.</p>
+
+<p>Equivalent to Java's @RegionalByRow and .NET's [RegionalByRow].</p>
+
+<p>Args:
+    default_region: Default region for new rows.</p>
+</div>
+
+
+                </section>
+                <section id="semantic_search">
+                            <input id="semantic_search-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">semantic_search</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">table</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">vector_column</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">text_column</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'cosine'</span>,</span><span class="param">	<span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="semantic_search-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#semantic_search"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="semantic_search-223"><a href="#semantic_search-223"><span class="linenos">223</span></a><span class="k">def</span><span class="w"> </span><span class="nf">semantic_search</span><span class="p">(</span>
+</span><span id="semantic_search-224"><a href="#semantic_search-224"><span class="linenos">224</span></a>    <span class="n">table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="semantic_search-225"><a href="#semantic_search-225"><span class="linenos">225</span></a>    <span class="n">vector_column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="semantic_search-226"><a href="#semantic_search-226"><span class="linenos">226</span></a>    <span class="n">text_column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="semantic_search-227"><a href="#semantic_search-227"><span class="linenos">227</span></a>    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"cosine"</span><span class="p">,</span>
+</span><span id="semantic_search-228"><a href="#semantic_search-228"><span class="linenos">228</span></a>    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="semantic_search-229"><a href="#semantic_search-229"><span class="linenos">229</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+</span><span id="semantic_search-230"><a href="#semantic_search-230"><span class="linenos">230</span></a><span class="w">    </span><span class="sd">"""Mark a function as a hybrid semantic search (vector + text filter).</span>
+</span><span id="semantic_search-231"><a href="#semantic_search-231"><span class="linenos">231</span></a>
+</span><span id="semantic_search-232"><a href="#semantic_search-232"><span class="linenos">232</span></a><span class="sd">    Args:</span>
+</span><span id="semantic_search-233"><a href="#semantic_search-233"><span class="linenos">233</span></a><span class="sd">        table: Table containing vector and text data.</span>
+</span><span id="semantic_search-234"><a href="#semantic_search-234"><span class="linenos">234</span></a><span class="sd">        vector_column: Column storing vector embeddings.</span>
+</span><span id="semantic_search-235"><a href="#semantic_search-235"><span class="linenos">235</span></a><span class="sd">        text_column: Column containing searchable text.</span>
+</span><span id="semantic_search-236"><a href="#semantic_search-236"><span class="linenos">236</span></a><span class="sd">        metric: Distance metric.</span>
+</span><span id="semantic_search-237"><a href="#semantic_search-237"><span class="linenos">237</span></a><span class="sd">        limit: Maximum number of results.</span>
+</span><span id="semantic_search-238"><a href="#semantic_search-238"><span class="linenos">238</span></a><span class="sd">    """</span>
+</span><span id="semantic_search-239"><a href="#semantic_search-239"><span class="linenos">239</span></a>
+</span><span id="semantic_search-240"><a href="#semantic_search-240"><span class="linenos">240</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+</span><span id="semantic_search-241"><a href="#semantic_search-241"><span class="linenos">241</span></a>        <span class="n">fn</span><span class="o">.</span><span class="n">__crdb_semantic_search__</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="semantic_search-242"><a href="#semantic_search-242"><span class="linenos">242</span></a>            <span class="s2">"table"</span><span class="p">:</span> <span class="n">table</span><span class="p">,</span>
+</span><span id="semantic_search-243"><a href="#semantic_search-243"><span class="linenos">243</span></a>            <span class="s2">"vector_column"</span><span class="p">:</span> <span class="n">vector_column</span><span class="p">,</span>
+</span><span id="semantic_search-244"><a href="#semantic_search-244"><span class="linenos">244</span></a>            <span class="s2">"text_column"</span><span class="p">:</span> <span class="n">text_column</span><span class="p">,</span>
+</span><span id="semantic_search-245"><a href="#semantic_search-245"><span class="linenos">245</span></a>            <span class="s2">"metric"</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span>
+</span><span id="semantic_search-246"><a href="#semantic_search-246"><span class="linenos">246</span></a>            <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+</span><span id="semantic_search-247"><a href="#semantic_search-247"><span class="linenos">247</span></a>        <span class="p">}</span>
+</span><span id="semantic_search-248"><a href="#semantic_search-248"><span class="linenos">248</span></a>        <span class="k">return</span> <span class="n">fn</span>
+</span><span id="semantic_search-249"><a href="#semantic_search-249"><span class="linenos">249</span></a>
+</span><span id="semantic_search-250"><a href="#semantic_search-250"><span class="linenos">250</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Mark a function as a hybrid semantic search (vector + text filter).</p>
+
+<p>Args:
+    table: Table containing vector and text data.
+    vector_column: Column storing vector embeddings.
+    text_column: Column containing searchable text.
+    metric: Distance metric.
+    limit: Maximum number of results.</p>
+</div>
+
+
+                </section>
+                <section id="vector_search">
+                            <input id="vector_search-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">vector_search</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">table</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">vector_column</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'cosine'</span>,</span><span class="param">	<span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span></span><span class="return-annotation">) -> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">~</span><span class="n">P</span><span class="p">,</span> <span class="o">~</span><span class="n">T</span><span class="p">]]</span>:</span></span>
+
+                <label class="view-source-button" for="vector_search-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#vector_search"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="vector_search-193"><a href="#vector_search-193"><span class="linenos">193</span></a><span class="k">def</span><span class="w"> </span><span class="nf">vector_search</span><span class="p">(</span>
+</span><span id="vector_search-194"><a href="#vector_search-194"><span class="linenos">194</span></a>    <span class="n">table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="vector_search-195"><a href="#vector_search-195"><span class="linenos">195</span></a>    <span class="n">vector_column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="vector_search-196"><a href="#vector_search-196"><span class="linenos">196</span></a>    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"cosine"</span><span class="p">,</span>
+</span><span id="vector_search-197"><a href="#vector_search-197"><span class="linenos">197</span></a>    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="vector_search-198"><a href="#vector_search-198"><span class="linenos">198</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+</span><span id="vector_search-199"><a href="#vector_search-199"><span class="linenos">199</span></a><span class="w">    </span><span class="sd">"""Mark a function as a vector similarity search operation.</span>
+</span><span id="vector_search-200"><a href="#vector_search-200"><span class="linenos">200</span></a>
+</span><span id="vector_search-201"><a href="#vector_search-201"><span class="linenos">201</span></a><span class="sd">    The decorated function's first positional argument (after self) should be</span>
+</span><span id="vector_search-202"><a href="#vector_search-202"><span class="linenos">202</span></a><span class="sd">    the query vector (list[float]).</span>
+</span><span id="vector_search-203"><a href="#vector_search-203"><span class="linenos">203</span></a>
+</span><span id="vector_search-204"><a href="#vector_search-204"><span class="linenos">204</span></a><span class="sd">    Args:</span>
+</span><span id="vector_search-205"><a href="#vector_search-205"><span class="linenos">205</span></a><span class="sd">        table: Table containing vector data.</span>
+</span><span id="vector_search-206"><a href="#vector_search-206"><span class="linenos">206</span></a><span class="sd">        vector_column: Column storing vector embeddings.</span>
+</span><span id="vector_search-207"><a href="#vector_search-207"><span class="linenos">207</span></a><span class="sd">        metric: Distance metric ('cosine', 'l2', 'inner_product').</span>
+</span><span id="vector_search-208"><a href="#vector_search-208"><span class="linenos">208</span></a><span class="sd">        limit: Maximum number of results.</span>
+</span><span id="vector_search-209"><a href="#vector_search-209"><span class="linenos">209</span></a><span class="sd">    """</span>
+</span><span id="vector_search-210"><a href="#vector_search-210"><span class="linenos">210</span></a>
+</span><span id="vector_search-211"><a href="#vector_search-211"><span class="linenos">211</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">T</span><span class="p">]:</span>
+</span><span id="vector_search-212"><a href="#vector_search-212"><span class="linenos">212</span></a>        <span class="n">fn</span><span class="o">.</span><span class="n">__crdb_vector_search__</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># type: ignore[attr-defined]</span>
+</span><span id="vector_search-213"><a href="#vector_search-213"><span class="linenos">213</span></a>            <span class="s2">"table"</span><span class="p">:</span> <span class="n">table</span><span class="p">,</span>
+</span><span id="vector_search-214"><a href="#vector_search-214"><span class="linenos">214</span></a>            <span class="s2">"vector_column"</span><span class="p">:</span> <span class="n">vector_column</span><span class="p">,</span>
+</span><span id="vector_search-215"><a href="#vector_search-215"><span class="linenos">215</span></a>            <span class="s2">"metric"</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span>
+</span><span id="vector_search-216"><a href="#vector_search-216"><span class="linenos">216</span></a>            <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+</span><span id="vector_search-217"><a href="#vector_search-217"><span class="linenos">217</span></a>        <span class="p">}</span>
+</span><span id="vector_search-218"><a href="#vector_search-218"><span class="linenos">218</span></a>        <span class="k">return</span> <span class="n">fn</span>
+</span><span id="vector_search-219"><a href="#vector_search-219"><span class="linenos">219</span></a>
+</span><span id="vector_search-220"><a href="#vector_search-220"><span class="linenos">220</span></a>    <span class="k">return</span> <span class="n">decorator</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Mark a function as a vector similarity search operation.</p>
+
+<p>The decorated function's first positional argument (after self) should be
+the query vector (list[float]).</p>
+
+<p>Args:
+    table: Table containing vector data.
+    vector_column: Column storing vector embeddings.
+    metric: Distance metric ('cosine', 'l2', 'inner_product').
+    limit: Maximum number of results.</p>
+</div>
+
+
+                </section>
+    </main>
+</body>
+</html>
