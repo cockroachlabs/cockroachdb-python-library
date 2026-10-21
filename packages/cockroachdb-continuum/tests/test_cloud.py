@@ -54,8 +54,18 @@ class _RecordingTransport:
 
 def test_http_list_parses_and_sends_bearer():
     body = json.dumps(
-        {"clusters": [{"id": "c1", "name": "prod", "plan": "STANDARD",
-                       "state": "CREATED", "cloud_provider": "AWS", "regions": ["us-east-1"]}]}
+        {
+            "clusters": [
+                {
+                    "id": "c1",
+                    "name": "prod",
+                    "plan": "STANDARD",
+                    "state": "CREATED",
+                    "cloud_provider": "AWS",
+                    "regions": ["us-east-1"],
+                }
+            ]
+        }
     )
     t = _RecordingTransport({("GET", "/clusters"): (200, body)})
     c = HttpCloudClient(CloudConfig(enabled=True, api_key="sk-123"), transport=t)

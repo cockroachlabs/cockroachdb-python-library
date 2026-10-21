@@ -486,9 +486,16 @@ Optional surfaces for [Cockroach Continuum](https://www.cockroachlabs.com/docs/c
 
 ```python
 from cockroachdb.continuum import (
-    CloudConfig, make_cloud, datadog_export, health,
-    VirtualClusterManager, routing_conn_string,
-    McpConfig, make_mcp, McpAegisClient, McpToolNames,
+    CloudConfig,
+    make_cloud,
+    datadog_export,
+    health,
+    VirtualClusterManager,
+    routing_conn_string,
+    McpConfig,
+    make_mcp,
+    McpAegisClient,
+    McpToolNames,
 )
 
 # --- Cloud control plane (simulated until api_key is set) ---
@@ -498,14 +505,16 @@ cloud.configure_metric_export(cluster_id, datadog_export(dd_key, "US1"))  # type
 ready = health(cloud)  # bool
 
 # --- Virtual clusters + routing ---
-vm = VirtualClusterManager(conn)      # any DB-API connection (e.g. psycopg)
+vm = VirtualClusterManager(conn)  # any DB-API connection (e.g. psycopg)
 vm.create("analytics")
 dsn = routing_conn_string(base_dsn, "analytics")  # adds -ccluster option
 
 # --- MCP client (real 2025-06-18 wire protocol) + Aegis over MCP ---
 mcp = make_mcp(McpConfig(enabled=True, endpoint="https://cockroachlabs.cloud/mcp", token=key))
 tools = mcp.list_tools()
-aegis = McpAegisClient(mcp, McpToolNames(findings="list_findings"))  # discover names via list_tools
+aegis = McpAegisClient(
+    mcp, McpToolNames(findings="list_findings")
+)  # discover names via list_tools
 findings = aegis.findings()
 ```
 
@@ -515,7 +524,12 @@ Also in the `continuum` package: a standalone **Aegis** client (findings/recomme
 
 ```python
 from cockroachdb.continuum import (
-    AegisConfig, make_aegis, AegisExhaust, storage_summary, vcluster, Priority,
+    AegisConfig,
+    make_aegis,
+    AegisExhaust,
+    storage_summary,
+    vcluster,
+    Priority,
 )
 
 # Aegis — simulated until an endpoint is set:

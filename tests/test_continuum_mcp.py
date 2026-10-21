@@ -47,7 +47,13 @@ class _FakeTransport:
             return (
                 200,
                 {"Content-Type": "application/json", "Mcp-Session-Id": "sess-123"},
-                json.dumps({"jsonrpc": "2.0", "id": req["id"], "result": {"protocolVersion": "2025-06-18"}}),
+                json.dumps(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": req["id"],
+                        "result": {"protocolVersion": "2025-06-18"},
+                    }
+                ),
             )
         if req["method"] == "tools/list":
             result = {"tools": [{"name": "list_findings", "description": "d"}]}
@@ -89,11 +95,21 @@ def test_http_server_error_surfaced() -> None:
         if "id" not in req:
             return 202, {}, ""
         if req["method"] == "initialize":
-            return 200, {"Content-Type": "application/json"}, json.dumps(
-                {"jsonrpc": "2.0", "id": req["id"], "result": {}}
+            return (
+                200,
+                {"Content-Type": "application/json"},
+                json.dumps({"jsonrpc": "2.0", "id": req["id"], "result": {}}),
             )
-        return 200, {"Content-Type": "application/json"}, json.dumps(
-            {"jsonrpc": "2.0", "id": req["id"], "error": {"code": -32601, "message": "method not found"}}
+        return (
+            200,
+            {"Content-Type": "application/json"},
+            json.dumps(
+                {
+                    "jsonrpc": "2.0",
+                    "id": req["id"],
+                    "error": {"code": -32601, "message": "method not found"},
+                }
+            ),
         )
 
     c = HttpMcpClient(McpConfig(endpoint="https://x/mcp"), transport)

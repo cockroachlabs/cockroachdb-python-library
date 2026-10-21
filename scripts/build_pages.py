@@ -13,6 +13,7 @@ Produces, under ``_site/``:
 Run after ``uv build`` has produced ``packages/*/dist/*`` and ``pdoc`` has
 written ``_site/apidocs/``. Deterministic (no network, no timestamps).
 """
+
 from __future__ import annotations
 
 import html
@@ -68,27 +69,34 @@ def build_pep503(pkgs: list[dict]) -> None:
         for dist in pkg["dists"]:
             shutil.copy2(dist, SITE / "packages" / dist.name)
             # ../../packages/<file> relative to simple/<norm>/index.html
-            file_links.append(f'<a href="../../packages/{html.escape(dist.name)}">{html.escape(dist.name)}</a><br>')
+            file_links.append(
+                f'<a href="../../packages/{html.escape(dist.name)}">{html.escape(dist.name)}</a><br>'
+            )
         (proj_dir / "index.html").write_text(
             f"<!doctype html><html><head><meta charset='utf-8'>"
             f"<title>Links for {html.escape(pkg['name'])}</title></head><body>"
-            f"<h1>Links for {html.escape(pkg['name'])}</h1>\n" + "\n".join(file_links) + "</body></html>\n"
+            f"<h1>Links for {html.escape(pkg['name'])}</h1>\n"
+            + "\n".join(file_links)
+            + "</body></html>\n"
         )
         root_links.append(f'<a href="./{norm}/">{html.escape(pkg["name"])}</a><br>')
     (SITE / "simple" / "index.html").write_text(
         "<!doctype html><html><head><meta charset='utf-8'><title>Simple index</title></head><body>\n"
-        + "\n".join(root_links) + "</body></html>\n"
+        + "\n".join(root_links)
+        + "</body></html>\n"
     )
 
 
 def build_landing(pkgs: list[dict]) -> None:
-    version = next((p["version"] for p in pkgs if p["name"] == "cockroachdb-core"), pkgs[0]["version"])
+    version = next(
+        (p["version"] for p in pkgs if p["name"] == "cockroachdb-core"), pkgs[0]["version"]
+    )
     cards = []
     for pkg in pkgs:
         blurb = BLURBS.get(pkg["name"], "CockroachDB Python package.")
-        cards.append(f"""        <div class="card"><a class="card-link" href="./apidocs/">{html.escape(pkg['name'])} API reference</a>
-          <span class="mod">{html.escape(pkg['name'])}</span>
-          <h3>{html.escape(pkg['name'])}</h3>
+        cards.append(f"""        <div class="card"><a class="card-link" href="./apidocs/">{html.escape(pkg["name"])} API reference</a>
+          <span class="mod">{html.escape(pkg["name"])}</span>
+          <h3>{html.escape(pkg["name"])}</h3>
           <p>{html.escape(blurb)}</p>
           <div class="go">API reference →</div></div>""")
     cards_html = "\n".join(cards)
@@ -97,7 +105,9 @@ def build_landing(pkgs: list[dict]) -> None:
         "    cockroachdb-core cockroachdb-continuum"
     )
     SITE.mkdir(parents=True, exist_ok=True)
-    (SITE / "index.html").write_text(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+    (
+        SITE / "index.html"
+    ).write_text(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CockroachDB Python Library — API Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

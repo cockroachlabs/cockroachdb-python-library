@@ -57,6 +57,8 @@ known-first-party = ["cockroachdb"]
 # Tests: names encode PostgreSQL error codes (e.g. 40P01) and fake exception
 # classes; these are intentional and not part of any public API.
 "tests/**" = ["N802", "N818", "E501", "SIM117"]
+# scripts: build helpers with embedded HTML/CSS template strings (long lines).
+"scripts/**" = ["E501"]
 
 [tool.mypy]
 python_version = "3.11"
