@@ -33,5 +33,23 @@ jobs:
       - name: Mypy
         run: uv run mypy packages/cockroachdb/src packages/cockroachdb-core/src packages/cockroachdb-continuum/src packages/cockroachdb-testing/src
 
+      - name: Start CockroachDB
+        # Many tests (DDL compiler, dialect, alembic, integration) connect to a
+        # live node at localhost:26257; without one they fail with "connection
+        # refused". Testcontainers-based tests use the same Docker daemon.
+        run: |
+          docker run -d --name crdb -p 26257:26257 \
+            cockroachdb/cockroach:latest-v25.1 start-single-node --insecure
+          for i in $(seq 1 60); do
+            if docker exec crdb ./cockroach sql --insecure -e 'SELECT 1' >/dev/null 2>&1; then
+              echo "CockroachDB ready"; break
+            fi
+            sleep 2
+          done
+
       - name: Pytest
+        env:
+          CRDB_URL: postgresql://root@localhost:26257/defaultdb?sslmode=disable
+          DATABASE_URL: postgresql://root@localhost:26257/defaultdb?sslmode=disable
+          COCKROACH_URL: postgresql://root@localhost:26257/defaultdb?sslmode=disable
         run: uv run pytest tests/ -v --tb=short

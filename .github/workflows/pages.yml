@@ -1,0 +1,56 @@
+name: Pages
+
+# Builds all workspace packages, a PEP 503 install index, and pdoc API docs,
+# then deploys them to GitHub Pages:
+#   https://cockroachlabs.github.io/cockroachdb-python-library/
+# Install packages with:
+#   pip install --extra-index-url \
+#     https://cockroachlabs.github.io/cockroachdb-python-library/simple/ cockroachdb-core
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install Python
+        run: uv python install 3.12
+
+      - name: Sync workspace
+        run: uv sync --all-packages --all-extras
+
+      - name: Build all packages
+        run: |
+          set -euo pipefail
+          for pkg in packages/*/; do
+            echo "Building $pkg"
+            ( cd "$pkg" && uv build )
+          done
+
+      - name: Generate API docs (pdoc)
+        run: uv run --with pdoc pdoc cockroachdb -o _site/apidocs
+
+      - name: Assemble Pages site (landing + PEP 503 index)
+        run: python3 scripts/build_pages.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site
+          publish_branch: gh-pages

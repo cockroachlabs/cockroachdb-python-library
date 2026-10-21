@@ -17,19 +17,20 @@ import contextlib
 import json
 import urllib.error
 import urllib.request
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from itertools import count
 from typing import TYPE_CHECKING, Any, Protocol, runtime_checkable
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping
+    from typing import TypeAlias
 
 PROTOCOL_VERSION = "2025-06-18"
 
 # A transport maps (method, url, headers, body) -> (status, response_headers, text).
-McpTransport = (
-    "Callable[[str, str, Mapping[str, str], str | None], tuple[int, Mapping[str, str], str]]"
-)
+McpTransport: TypeAlias = Callable[
+    [str, str, Mapping[str, str], str | None], tuple[int, Mapping[str, str], str]
+]
 
 
 @dataclass(frozen=True)
