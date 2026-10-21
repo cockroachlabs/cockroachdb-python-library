@@ -1,11 +1,11 @@
 # CockroachDB Python Library
 
-[![PyPI](https://img.shields.io/pypi/v/cockroachdb.svg)](https://pypi.org/project/cockroachdb/)
-[![Python](https://img.shields.io/pypi/pyversions/cockroachdb.svg)](https://pypi.org/project/cockroachdb/)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![CI](https://img.shields.io/github/actions/workflow/status/cockroachdb/cockroachdb-python-library/ci.yml?branch=main)](https://github.com/cockroachdb/cockroachdb-python-library/actions)
+[![CI](https://github.com/cockroachlabs/cockroachdb-python-library/actions/workflows/ci.yml/badge.svg)](https://github.com/cockroachlabs/cockroachdb-python-library/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/cockroachlabs/cockroachdb-python-library?sort=semver)](https://github.com/cockroachlabs/cockroachdb-python-library/releases)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-A production-grade Python library for [CockroachDB](https://www.cockroachlabs.com/) that provides automatic transaction retry handling, multi-region support, follower reads, CDC webhook handlers, vector search, and RAG pipelines. Part of the CockroachDB language-specific library family alongside the [Java Spring Boot Starter](https://github.com/cockroachdb/cockroachdb-java-library), [.NET Library](https://github.com/cockroachdb/cockroachdb-dotnet-library), and [Go Library](https://github.com/cockroachdb/cockroachdb-go-library).
+A production-grade Python library for [CockroachDB](https://www.cockroachlabs.com/) that provides automatic transaction retry handling, multi-region support, follower reads, CDC webhook handlers, vector search, and RAG pipelines. Part of the CockroachDB language-specific library family alongside the [Java Spring Boot Starter](https://github.com/cockroachlabs/cockroachdb-java-library), [.NET Library](https://github.com/cockroachlabs/cockroachdb-dotnet-library), and [Go Library](https://github.com/cockroachlabs/cockroachdb-go-library).
 
 ## Architecture
 
@@ -20,6 +20,10 @@ The library is structured as a layered monorepo of six packages with a clear dep
 </p>
 
 ## Quick Install
+
+> Packages are published to this repository's GitHub Pages index (not PyPI).
+> Add `--extra-index-url https://cockroachlabs.github.io/cockroachdb-python-library/simple/`
+> to each `pip install` below, or set it once in your `pip.conf`.
 
 ```bash
 # Base package (decorators, types, config, exceptions)
