@@ -6,6 +6,8 @@ import contextvars
 from contextlib import contextmanager
 from typing import TYPE_CHECKING
 
+from cockroachdb.staleness import build_staleness
+
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
@@ -31,10 +33,31 @@ class FollowerReadContext:
 
     @classmethod
     @contextmanager
-    def scoped(cls, staleness: str = "follower_read_timestamp()") -> Iterator[str]:
-        """Context manager that activates follower reads for the block duration."""
-        token = _follower_read_var.set(staleness)
+    def scoped(
+        cls,
+        staleness: str = "follower_read_timestamp()",
+        *,
+        hours_ago: int = 0,
+        minutes_ago: int = 0,
+        seconds_ago: int = 0,
+    ) -> Iterator[str]:
+        """Context manager that activates follower reads for the block duration.
+
+        Staleness is additive: ``hours_ago``/``minutes_ago``/``seconds_ago`` add
+        up and, when positive, compose to ``'-Ns'`` taking precedence over
+        *staleness*. With no parts set, *staleness* is used.
+
+        Raises:
+            ValueError: if any additive part is negative (fail fast).
+        """
+        resolved = build_staleness(
+            staleness,
+            hours_ago=hours_ago,
+            minutes_ago=minutes_ago,
+            seconds_ago=seconds_ago,
+        )
+        token = _follower_read_var.set(resolved)
         try:
-            yield staleness
+            yield resolved
         finally:
             _follower_read_var.reset(token)

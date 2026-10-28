@@ -157,10 +157,24 @@ class CockroachDBTemplate:
 
     @contextmanager
     def follower_read(
-        self, staleness: str = "follower_read_timestamp()"
+        self,
+        staleness: str = "follower_read_timestamp()",
+        *,
+        hours_ago: int = 0,
+        minutes_ago: int = 0,
+        seconds_ago: int = 0,
     ) -> Iterator[CockroachDBTemplate]:
-        """Context manager that activates follower reads."""
-        with FollowerReadContext.scoped(staleness):
+        """Context manager that activates follower reads.
+
+        Staleness is additive; see :meth:`FollowerReadContext.scoped`. A
+        negative additive part raises ``ValueError``.
+        """
+        with FollowerReadContext.scoped(
+            staleness,
+            hours_ago=hours_ago,
+            minutes_ago=minutes_ago,
+            seconds_ago=seconds_ago,
+        ):
             yield self
 
 
@@ -249,8 +263,22 @@ class AsyncCockroachDBTemplate:
 
     @contextmanager
     def follower_read(
-        self, staleness: str = "follower_read_timestamp()"
+        self,
+        staleness: str = "follower_read_timestamp()",
+        *,
+        hours_ago: int = 0,
+        minutes_ago: int = 0,
+        seconds_ago: int = 0,
     ) -> Iterator[AsyncCockroachDBTemplate]:
-        """Context manager that activates follower reads."""
-        with FollowerReadContext.scoped(staleness):
+        """Context manager that activates follower reads.
+
+        Staleness is additive; see :meth:`FollowerReadContext.scoped`. A
+        negative additive part raises ``ValueError``.
+        """
+        with FollowerReadContext.scoped(
+            staleness,
+            hours_ago=hours_ago,
+            minutes_ago=minutes_ago,
+            seconds_ago=seconds_ago,
+        ):
             yield self

@@ -165,30 +165,52 @@ class CockroachDBSession:
     # Follower reads
     # ------------------------------------------------------------------
 
-    def follower_read(self, fn: Callable[[Session], T]) -> T:
+    def follower_read(
+        self,
+        fn: Callable[[Session], T],
+        *,
+        staleness: str = "follower_read_timestamp()",
+        hours_ago: int = 0,
+        minutes_ago: int = 0,
+        seconds_ago: int = 0,
+    ) -> T:
         """Execute *fn* as a CockroachDB follower read.
 
-        Sets the :data:`FollowerReadContext` contextvar so the event
-        listener injects ``SET TRANSACTION AS OF SYSTEM TIME
-        follower_read_timestamp()`` before the query.
+        Activates the :class:`FollowerReadContext` for the block so the
+        event listener injects ``SET TRANSACTION AS OF SYSTEM TIME
+        {staleness}`` before the query.
+
+        Staleness is additive: ``hours_ago``/``minutes_ago``/``seconds_ago``
+        add up and, when positive, compose to ``'-Ns'`` taking precedence
+        over *staleness*. With no parts set, *staleness* is used.
 
         Args:
             fn: A callable that receives a ``Session`` and returns a
                 result.  Should perform **read-only** operations.
+            staleness: AS OF SYSTEM TIME expression used when no additive
+                parts are set.
+            hours_ago: Whole hours of staleness to add. Must be >= 0.
+            minutes_ago: Whole minutes of staleness to add. Must be >= 0.
+            seconds_ago: Whole seconds of staleness to add. Must be >= 0.
 
         Returns:
             The return value of *fn*.
+
+        Raises:
+            ValueError: if any additive part is negative (fail fast — raised
+                before any session is opened).
         """
-        token = FollowerReadContext.set(True)
-        try:
+        with FollowerReadContext.scoped(
+            staleness,
+            hours_ago=hours_ago,
+            minutes_ago=minutes_ago,
+            seconds_ago=seconds_ago,
+        ):
             session = self._session_factory()
             try:
-                result = fn(session)
-                return result
+                return fn(session)
             finally:
                 session.close()
-        finally:
-            FollowerReadContext.reset(token)
 
     # ------------------------------------------------------------------
     # Region-scoped operations

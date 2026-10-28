@@ -15,6 +15,7 @@ import time
 from typing import TYPE_CHECKING, ParamSpec, TypeVar
 
 from cockroachdb.exceptions import CockroachDBRetryExhausted, is_retryable_error
+from cockroachdb.staleness import build_staleness
 from cockroachdb.types import IsolationLevel
 
 if TYPE_CHECKING:
@@ -103,18 +104,39 @@ def crdb_retry(
 
 def follower_read(
     staleness: str = "follower_read_timestamp()",
+    *,
+    hours_ago: int = 0,
+    minutes_ago: int = 0,
+    seconds_ago: int = 0,
 ) -> Callable[[Callable[P, T]], Callable[P, T]]:
     """Execute read queries AS OF SYSTEM TIME for low-latency replica reads.
 
-    The staleness parameter controls freshness — either a built-in function
-    like follower_read_timestamp() or an interval like '-5s'.
+    Always performs a follower read — there is no fallback to a current read.
+
+    Staleness is additive: ``hours_ago``/``minutes_ago``/``seconds_ago`` add up
+    and, when their total is positive, compose to ``'-Ns'`` which takes
+    precedence over *staleness*. With no parts set, *staleness* is used (a
+    built-in like ``follower_read_timestamp()`` or an interval like ``'-5s'``).
 
     Args:
-        staleness: AS OF SYSTEM TIME expression.
+        staleness: AS OF SYSTEM TIME expression used when no additive parts set.
+        hours_ago: Whole hours of staleness to add. Must be >= 0.
+        minutes_ago: Whole minutes of staleness to add. Must be >= 0.
+        seconds_ago: Whole seconds of staleness to add. Must be >= 0.
+
+    Raises:
+        ValueError: if any additive part is negative (raised at decoration
+            time — fail fast rather than silently read current data).
     """
+    resolved = build_staleness(
+        staleness,
+        hours_ago=hours_ago,
+        minutes_ago=minutes_ago,
+        seconds_ago=seconds_ago,
+    )
 
     def decorator(fn: Callable[P, T]) -> Callable[P, T]:
-        fn.__crdb_follower_read__ = staleness  # type: ignore[attr-defined]
+        fn.__crdb_follower_read__ = resolved  # type: ignore[attr-defined]
         return fn
 
     return decorator

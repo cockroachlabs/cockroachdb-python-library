@@ -145,17 +145,71 @@ with CockroachDBSession(engine) as session:
 
 ### 4. Follower Reads
 
+CockroachDB's [follower reads](https://www.cockroachlabs.com/docs/stable/follower-reads.html) let any replica serve reads at a slightly stale timestamp (about 4.2s old), avoiding the round-trip to the leaseholder. Mark a read with `@follower_read` and it runs `AS OF SYSTEM TIME` — always a follower read, never a silent fallback to current data:
+
 ```python
 from cockroachdb import follower_read
 
 
-@follower_read(staleness="follower_read_timestamp()")
+@follower_read()
 def get_dashboard_data(conn):
     """Read from the nearest follower replica — no cross-region latency."""
     with conn.cursor() as cur:
         cur.execute("SELECT * FROM analytics_summary")
         return cur.fetchall()
 ```
+
+#### Choosing how far back to read
+
+By default the read runs at `follower_read_timestamp()`. Use the keyword-only `hours_ago`, `minutes_ago` and `seconds_ago` params to read further back — they add up and compose to `AS OF SYSTEM TIME '-Ns'`:
+
+```python
+@follower_read()                                 # follower_read_timestamp()
+@follower_read(seconds_ago=20)                   # '-20s'
+@follower_read(minutes_ago=5)                    # '-300s'
+@follower_read(hours_ago=1)                      # '-3600s'
+@follower_read(hours_ago=1, minutes_ago=30)      # '-5400s' (1h30m ago)
+```
+
+When no additive part is set, the `staleness` string is used — pass a built-in like `follower_read_timestamp()` (default) or a raw interval. A time more recent than `follower_read_timestamp()` still reads historical data, but the leaseholder serves it rather than the nearest replica; a time older than the table's GC window fails in CockroachDB.
+
+#### Context manager and SQLAlchemy
+
+The same additive params work on the `FollowerReadContext.scoped()` context manager (and the template/SQLAlchemy-session helpers that delegate to it):
+
+```python
+from cockroachdb.core.follower_read import FollowerReadContext
+
+with FollowerReadContext.scoped(minutes_ago=2, seconds_ago=30):  # '-150s'
+    ...  # every read in this block runs AS OF SYSTEM TIME
+
+# SQLAlchemy session helper — reads go to a follower for the callback's duration
+session.follower_read(lambda s: s.query(Product).all(), seconds_ago=20)
+```
+
+The SQLAlchemy session `follower_read()` helper routes through the same mechanism and is fully functional (an earlier version raised `AttributeError` at runtime; fixed).
+
+#### Misuse fails instead of reading current data
+
+Staleness composition lives in one place — `build_staleness()` (exported from `cockroachdb`) — which never silently falls back to a current read. A **negative** `hours_ago`/`minutes_ago`/`seconds_ago` raises `ValueError` at call time (at decoration time for `@follower_read`, before any session opens for the context manager and SQLAlchemy helper):
+
+```python
+from cockroachdb import build_staleness
+
+build_staleness(minutes_ago=2, seconds_ago=30)  # "'-150s'"
+build_staleness()  # "follower_read_timestamp()"
+build_staleness(seconds_ago=-1)  # raises ValueError
+```
+
+#### When to use follower reads
+
+| Use case | Follower read? |
+|----------|---------------|
+| Product browsing, search results | Yes — slight staleness is imperceptible |
+| Dashboards, aggregate metrics | Yes — a few seconds lag is fine |
+| Checkout, payment | No — must see real-time inventory |
+| Authentication, permissions | No — must see latest credentials |
+
 
 ### 5. Multi-Region with Context Manager
 
