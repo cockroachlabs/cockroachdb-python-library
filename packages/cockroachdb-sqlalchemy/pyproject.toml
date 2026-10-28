@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cockroachdb-sqlalchemy"
-version = "0.1.1"
+version = "0.1.2"
 description = "CockroachDB Python Library — SQLAlchemy 2.0 adapter with retry, region, and follower-read support"
 readme = "README.md"
 requires-python = ">=3.11"

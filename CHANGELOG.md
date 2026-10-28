@@ -6,7 +6,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions are per
 package; this entry covers the `cockroachdb`, `cockroachdb-core`, and
 `cockroachdb-sqlalchemy` packages.
 
-## [Unreleased]
+## [0.1.2] - 2026-10-28
 
 Follower reads can now target a specific staleness, and a `@follower_read` /
 SQLAlchemy session helper that raised `AttributeError` at runtime has been fixed.
