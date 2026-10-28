@@ -10,6 +10,7 @@ from cockroachdb.config import CockroachDBConfig
 from cockroachdb.exceptions import CockroachDBRetryExhausted
 from cockroachdb.sqla.session import (
     CockroachDBSession,
+    FollowerReadContext,
     RegionalSession,
     _calc_delay,
     _is_serialization_error,
@@ -129,45 +130,50 @@ class TestCockroachDBSessionExecuteWithRetry:
 
 
 class TestFollowerRead:
-    """Tests for CockroachDBSession.follower_read."""
+    """Tests for CockroachDBSession.follower_read (real FollowerReadContext)."""
 
-    @patch("cockroachdb.sqla.session.FollowerReadContext")
-    def test_sets_and_resets_context(self, mock_frc):
-        engine = MagicMock()
-        crdb = CockroachDBSession(engine)
+    def _crdb_with_fake_session(self):
+        # MagicMock engine is fine: sessionmaker(bind=...) binds lazily and we
+        # override _session_factory so no real connection is ever opened.
+        crdb = CockroachDBSession(MagicMock())
         mock_session = MagicMock()
         crdb._session_factory = MagicMock(return_value=mock_session)
-        mock_token = MagicMock()
-        mock_frc.set.return_value = mock_token
+        return crdb, mock_session
 
-        crdb.follower_read(lambda s: "result")
+    def test_default_staleness_activated_and_reset(self):
+        crdb, _ = self._crdb_with_fake_session()
+        seen = {}
+        crdb.follower_read(lambda s: seen.setdefault("v", FollowerReadContext.current_staleness()))
+        assert seen["v"] == "follower_read_timestamp()"
+        assert FollowerReadContext.is_active() is False  # reset after block
 
-        mock_frc.set.assert_called_once_with(True)
-        mock_frc.reset.assert_called_once_with(mock_token)
+    def test_additive_staleness_composes(self):
+        crdb, _ = self._crdb_with_fake_session()
+        seen = {}
+        crdb.follower_read(
+            lambda s: seen.setdefault("v", FollowerReadContext.current_staleness()),
+            minutes_ago=2,
+            seconds_ago=30,
+        )
+        assert seen["v"] == "'-150s'"
 
-    @patch("cockroachdb.sqla.session.FollowerReadContext")
-    def test_returns_fn_result(self, mock_frc):
-        engine = MagicMock()
-        crdb = CockroachDBSession(engine)
-        mock_session = MagicMock()
-        crdb._session_factory = MagicMock(return_value=mock_session)
-        mock_frc.set.return_value = MagicMock()
+    def test_negative_raises_before_session_opened(self):
+        crdb, _ = self._crdb_with_fake_session()
+        with pytest.raises(ValueError, match="minutes_ago"):
+            crdb.follower_read(lambda s: None, minutes_ago=-1)
+        crdb._session_factory.assert_not_called()  # fail fast
+        assert FollowerReadContext.is_active() is False
 
-        result = crdb.follower_read(lambda s: 42)
-        assert result == 42
+    def test_returns_fn_result(self):
+        crdb, _ = self._crdb_with_fake_session()
+        assert crdb.follower_read(lambda s: 42) == 42
 
-    @patch("cockroachdb.sqla.session.FollowerReadContext")
-    def test_closes_session_on_exception(self, mock_frc):
-        engine = MagicMock()
-        crdb = CockroachDBSession(engine)
-        mock_session = MagicMock()
-        crdb._session_factory = MagicMock(return_value=mock_session)
-        mock_frc.set.return_value = MagicMock()
-
+    def test_closes_session_on_exception(self):
+        crdb, mock_session = self._crdb_with_fake_session()
         with pytest.raises(RuntimeError):
             crdb.follower_read(lambda s: (_ for _ in ()).throw(RuntimeError("boom")))
-
         mock_session.close.assert_called_once()
+        assert FollowerReadContext.is_active() is False  # reset even on error
 
 
 class TestInRegion:

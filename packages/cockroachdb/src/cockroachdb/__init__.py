@@ -26,6 +26,7 @@ from cockroachdb.exceptions import (
     CockroachDBRetryExhausted,
     RegionValidationError,
 )
+from cockroachdb.staleness import build_staleness
 from cockroachdb.types import (
     DistanceMetric,
     IsolationLevel,
@@ -48,6 +49,7 @@ __all__ = [
     "TransactionOutcome",
     # Meta
     "__version__",
+    "build_staleness",
     "changefeed_handler",
     "crdb_region",
     # Decorators
