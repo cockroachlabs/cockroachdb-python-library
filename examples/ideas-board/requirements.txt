@@ -1,0 +1,10 @@
+# Concurrent Ideas Board example — dependencies
+#
+# Published install (what the tutorial/docs show): the library ships on an
+# anonymous PEP 503 feed, NOT public PyPI.
+--extra-index-url https://cockroachlabs.github.io/cockroachdb-python-library/simple/
+
+cockroachdb==0.1.2
+psycopg[binary]>=3.1
+pytest>=8.0
+testcontainers>=4.0  # integration test only; boots CockroachDB in --insecure mode
