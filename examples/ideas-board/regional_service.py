@@ -77,9 +77,7 @@ def add_in_us_west(dsn: str, text: str) -> str:
 def region_of(dsn: str, idea_id: str) -> str | None:
     """The ``crdb_region`` a row actually landed in, if present."""
     with psycopg.connect(dsn, autocommit=True) as conn, conn.cursor() as cur:
-        cur.execute(
-            "SELECT crdb_region::STRING FROM regional_idea WHERE id = %s", (idea_id,)
-        )
+        cur.execute("SELECT crdb_region::STRING FROM regional_idea WHERE id = %s", (idea_id,))
         row = cur.fetchone()
         return row[0] if row else None
 

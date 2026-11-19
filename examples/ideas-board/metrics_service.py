@@ -13,7 +13,6 @@ import time
 from typing import TYPE_CHECKING
 
 import psycopg
-
 import repository
 
 # tag::metrics-config[]
@@ -61,9 +60,7 @@ class MeteredIdeaService:
     def _apply_upvote(self, idea_id: int) -> None:
         """Read current votes, add one, write it back — in one SERIALIZABLE tx."""
         with psycopg.connect(self._dsn, autocommit=True) as conn:
-            conn.execute(
-                "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-            )
+            conn.execute("SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE")
             with conn.transaction(), conn.cursor() as cur:
                 votes = repository.current_votes(cur, idea_id)
                 time.sleep(CONTENTION_DELAY)

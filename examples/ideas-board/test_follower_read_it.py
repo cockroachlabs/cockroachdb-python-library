@@ -14,7 +14,6 @@ import time
 
 import psycopg
 import pytest
-
 import repository
 from follower_read_service import top_ideas
 
@@ -23,12 +22,12 @@ from follower_read_service import top_ideas
 def dsn() -> str:
     try:
         from crdb_container import insecure_crdb
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         pytest.skip(f"testcontainers unavailable: {exc}")
     try:
         with insecure_crdb() as url:
             yield url
-    except Exception as exc:  # noqa: BLE001 — Docker not running / image pull failed
+    except Exception as exc:
         pytest.skip(f"Docker/CockroachDB container unavailable: {exc}")
 
 
@@ -62,4 +61,6 @@ def test_top_ideas_from_follower_snapshot(dsn: str) -> None:
     assert top[0].text == "Full-text search"  # highest votes sorts first
     assert top[0].votes == 12
     assert [i.votes for i in top] == sorted((i.votes for i in top), reverse=True)
+
+
 # end::follower-read-it[]

@@ -13,9 +13,9 @@ import asyncio
 import os
 
 import pytest
+from semantic_service import DeterministicEmbeddingProvider, SemanticIdeaService
 
 from cockroachdb.ai import Document
-from semantic_service import DeterministicEmbeddingProvider, SemanticIdeaService
 
 IMAGE = os.environ.get("CRDB_VECTOR_IMAGE", "cockroachdb/cockroach:latest-v25.2")
 
@@ -34,12 +34,12 @@ QUERY_VEC = [0.95, 0.05, 0.0]
 def dsn() -> str:
     try:
         from crdb_container import insecure_crdb
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         pytest.skip(f"testcontainers unavailable: {exc}")
     try:
         with insecure_crdb(image=IMAGE) as url:
             yield url
-    except Exception as exc:  # noqa: BLE001 — Docker not running / image pull failed
+    except Exception as exc:
         pytest.skip(f"Docker/CockroachDB container unavailable: {exc}")
 
 
@@ -55,7 +55,7 @@ def test_find_similar_returns_nearest_first(dsn: str) -> None:
     service = SemanticIdeaService(dsn, provider)
     try:
         service.initialize()
-    except Exception as exc:  # noqa: BLE001 — honest gate: skip if no VECTOR type/index
+    except Exception as exc:
         _skip_if_no_vector(exc)
 
     docs = [Document(id=k, content=t, embedding=v) for k, (t, v) in DOCS.items()]
@@ -67,4 +67,6 @@ def test_find_similar_returns_nearest_first(dsn: str) -> None:
     distances = [h.distance for h in hits]
     assert distances == sorted(distances)  # closest-first
     assert hits[0].distance < 0.01  # query sits almost on dark-mode
+
+
 # end::semantic-it[]

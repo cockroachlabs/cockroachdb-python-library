@@ -11,7 +11,6 @@ from __future__ import annotations
 import time
 
 import psycopg
-
 import repository
 
 # tag::retry[]
@@ -33,9 +32,7 @@ def _apply_upvote(dsn: str, idea_id: int) -> None:
     inside the retried unit — not passed in.
     """
     with psycopg.connect(dsn, autocommit=True) as conn:
-        conn.execute(
-            "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-        )
+        conn.execute("SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE")
         with conn.transaction(), conn.cursor() as cur:
             votes = repository.current_votes(cur, idea_id)
             time.sleep(CONTENTION_DELAY)
@@ -46,13 +43,13 @@ def _apply_upvote(dsn: str, idea_id: int) -> None:
 def upvote_without_retry(dsn: str, idea_id: int) -> None:
     """Upvote with NO retry — a 40001 propagates and that vote is lost."""
     with psycopg.connect(dsn, autocommit=True) as conn:
-        conn.execute(
-            "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE"
-        )
+        conn.execute("SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE")
         with conn.transaction(), conn.cursor() as cur:
             votes = repository.current_votes(cur, idea_id)
             new_votes = votes + 1
             repository.update_votes(cur, idea_id, new_votes)
+
+
 # end::plain[]
 
 
@@ -61,4 +58,6 @@ def upvote_without_retry(dsn: str, idea_id: int) -> None:
 def upvote(dsn: str, idea_id: int) -> None:
     """Upvote WITH automatic retry — every vote eventually lands."""
     _apply_upvote(dsn, idea_id)
+
+
 # end::retry[]

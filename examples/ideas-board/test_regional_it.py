@@ -14,13 +14,11 @@ import os
 
 import psycopg
 import pytest
-
 import regional_service as rs
 
 pytestmark = pytest.mark.skipif(
     os.environ.get("CRDB_MULTIREGION") != "true",
-    reason="REGIONAL BY ROW needs a multi-region cluster; "
-    "set CRDB_MULTIREGION=true and CRDB_URL",
+    reason="REGIONAL BY ROW needs a multi-region cluster; set CRDB_MULTIREGION=true and CRDB_URL",
 )
 
 
@@ -38,4 +36,6 @@ def test_writes_home_rows_in_the_pinned_region() -> None:
 
     assert rs.region_of(url, east) == "us-east1"
     assert rs.region_of(url, west) == "us-west1"
+
+
 # end::region-it[]

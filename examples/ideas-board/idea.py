@@ -19,4 +19,6 @@ class Idea:
     id: int
     text: str
     votes: int
+
+
 # end::entity[]

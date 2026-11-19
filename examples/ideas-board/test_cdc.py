@@ -12,6 +12,7 @@ from __future__ import annotations
 import asyncio
 
 from cdc_handler import IdeaChangefeedHandler
+
 from cockroachdb.cdc import (
     ChangefeedHandlerRegistry,
     ChangefeedPayload,
@@ -56,4 +57,6 @@ def test_registry_dispatches_webhook_to_handler() -> None:
     assert seen.votes == 12
     assert handler.deletes == 0
     assert metrics.total_events == 1
+
+
 # end::cdc-unit-test[]

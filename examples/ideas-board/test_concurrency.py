@@ -13,7 +13,6 @@ from __future__ import annotations
 import threading
 
 import pytest
-
 import repository
 import service
 
@@ -26,13 +25,13 @@ TOTAL = THREADS * PER_THREAD
 def dsn() -> str:
     try:
         from crdb_container import insecure_crdb
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         pytest.skip(f"testcontainers unavailable: {exc}")
 
     try:
         with insecure_crdb() as url:
             yield url
-    except Exception as exc:  # noqa: BLE001 — Docker not running / image pull failed
+    except Exception as exc:
         pytest.skip(f"Docker/CockroachDB container unavailable: {exc}")
 
 
@@ -60,7 +59,7 @@ def _run(dsn: str, idea_id: int, fn) -> None:
             barrier.wait()
             try:
                 fn(dsn, idea_id)
-            except Exception:  # noqa: BLE001 — plain path drops conflicts
+            except Exception:
                 pass
 
     threads = [threading.Thread(target=worker) for _ in range(THREADS)]
@@ -80,4 +79,6 @@ def test_retry_lands_every_vote(dsn: str) -> None:
     plain_id = _seed(dsn)
     _run(dsn, plain_id, service.upvote_without_retry)
     assert _votes(dsn, plain_id) < TOTAL  # plain path: conflicts lose votes
+
+
 # end::concurrency-test[]

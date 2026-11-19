@@ -34,9 +34,7 @@ class DeterministicEmbeddingProvider:
     ``dimensions``) so searches are reproducible with no external model or network.
     """
 
-    def __init__(
-        self, mapping: dict[str, list[float]], dimensions: int = DIMENSIONS
-    ) -> None:
+    def __init__(self, mapping: dict[str, list[float]], dimensions: int = DIMENSIONS) -> None:
         self._mapping = mapping
         self._dimensions = dimensions
 

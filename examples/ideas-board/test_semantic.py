@@ -11,9 +11,10 @@ from __future__ import annotations
 
 import asyncio
 
+from semantic_service import DIMENSIONS, DeterministicEmbeddingProvider
+
 from cockroachdb.ai import Document
 from cockroachdb.types import DistanceMetric
-from semantic_service import DIMENSIONS, DeterministicEmbeddingProvider
 
 
 # tag::semantic-unit-test[]
@@ -35,4 +36,6 @@ def test_document_carries_precomputed_embedding() -> None:
 def test_cosine_similarity_is_monotonic_in_distance() -> None:
     cos = DistanceMetric.COSINE
     assert cos.to_similarity(0.0) > cos.to_similarity(0.5)  # nearer => more similar
+
+
 # end::semantic-unit-test[]

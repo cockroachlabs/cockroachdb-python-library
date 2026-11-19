@@ -38,9 +38,7 @@ class IdeaChangefeedHandler:
             self.deletes += 1
             return
         after = event.after
-        self.handled.append(
-            Idea(id=after["id"], text=after["text"], votes=after["votes"])
-        )
+        self.handled.append(Idea(id=after["id"], text=after["text"], votes=after["votes"]))
 
 
 # end::cdc-handler[]

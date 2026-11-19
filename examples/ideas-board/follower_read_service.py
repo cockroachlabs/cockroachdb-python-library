@@ -12,7 +12,6 @@ psycopg app, exactly how the Java demo threads its staleness through.
 from __future__ import annotations
 
 import psycopg
-
 from idea import Idea
 
 # tag::follower-read[]

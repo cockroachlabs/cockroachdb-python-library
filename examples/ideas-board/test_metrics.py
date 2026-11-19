@@ -38,4 +38,6 @@ def test_retry_engine_counts_retries_and_outcome() -> None:
     assert metrics.total_retries == 2  # two 40001s absorbed
     assert metrics.transactions[TransactionOutcome.RETRIED]  # retried run recorded
     assert metrics.total_transactions == 1  # one logical transaction
+
+
 # end::metrics-unit-test[]

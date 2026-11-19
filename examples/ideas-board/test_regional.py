@@ -8,8 +8,8 @@ need a multi-region cluster and are gated in ``test_regional_it.py``.
 from __future__ import annotations
 
 import pytest
-
 import regional_service as rs
+
 from cockroachdb.core import RegionContext
 from cockroachdb.exceptions import RegionValidationError
 
@@ -36,4 +36,6 @@ def test_region_validation_rejects_bad_names() -> None:
     RegionContext.validate("us-east1")  # valid — no raise
     with pytest.raises(RegionValidationError):
         RegionContext.validate("US_EAST!")
+
+
 # end::regional-unit-test[]

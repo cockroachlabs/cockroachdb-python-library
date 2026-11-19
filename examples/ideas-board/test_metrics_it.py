@@ -13,7 +13,6 @@ import threading
 
 import psycopg
 import pytest
-
 import repository
 from metrics_service import MeteredIdeaService
 
@@ -26,12 +25,12 @@ EXPECTED = WORKERS * ITERATIONS
 def dsn() -> str:
     try:
         from crdb_container import insecure_crdb
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         pytest.skip(f"testcontainers unavailable: {exc}")
     try:
         with insecure_crdb() as url:
             yield url
-    except Exception as exc:  # noqa: BLE001 — Docker not running / image pull failed
+    except Exception as exc:
         pytest.skip(f"Docker/CockroachDB container unavailable: {exc}")
 
 
@@ -60,4 +59,6 @@ def test_metrics_count_transactions_and_retries(dsn: str) -> None:
 
     assert service.metrics.total_transactions == EXPECTED  # one per metered upvote
     assert service.metrics.total_retries > 0  # contention forces 40001 retries
+
+
 # end::metrics-it[]

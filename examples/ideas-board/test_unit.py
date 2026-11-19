@@ -9,7 +9,6 @@ from __future__ import annotations
 import contextlib
 
 import pytest
-
 import service
 
 
@@ -66,4 +65,6 @@ def test_upvote_without_retry_reads_then_writes_plus_one(monkeypatch: pytest.Mon
     service.upvote_without_retry("postgresql://ignored", idea_id=7)
 
     assert store["written"] == 42  # read 41, wrote 41 + 1
+
+
 # end::unit-test[]

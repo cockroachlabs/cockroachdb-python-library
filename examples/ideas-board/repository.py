@@ -55,4 +55,6 @@ def update_votes(cur: psycopg.Cursor, idea_id: int, votes: int) -> None:
 def reset(cur: psycopg.Cursor, idea_id: int, votes: int = 0) -> None:
     """Reset an idea's vote count (used to re-run the two paths cleanly)."""
     cur.execute("UPDATE ideas SET votes = %s WHERE id = %s", (votes, idea_id))
+
+
 # end::repo[]

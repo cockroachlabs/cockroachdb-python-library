@@ -8,9 +8,9 @@ follower-snapshot read needs a cluster (see ``test_follower_read_it.py``).
 
 from __future__ import annotations
 
+import follower_read_service as frs
 import pytest
 
-import follower_read_service as frs
 from cockroachdb import build_staleness, follower_read
 from cockroachdb.core import FollowerReadContext
 
@@ -42,4 +42,6 @@ def test_scoped_context_activates_and_resets() -> None:
         assert staleness == "'-5s'"
         assert FollowerReadContext.is_active()
     assert FollowerReadContext.current_staleness() is None
+
+
 # end::follower-read-unit-test[]

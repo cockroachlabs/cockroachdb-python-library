@@ -52,7 +52,7 @@ def _hammer(dsn: str, idea_id: int, fn, votes: int) -> int:
         barrier.wait()
         try:
             fn(dsn, idea_id)
-        except Exception as exc:  # noqa: BLE001 — count, don't crash the demo
+        except Exception as exc:
             with lock:
                 failures.append(exc)
 
@@ -77,8 +77,10 @@ def main() -> None:
         failures = _hammer(dsn, idea_id, service.upvote_without_retry, votes)
         with conn.cursor() as cur:
             plain_total = repository.current_votes(cur, idea_id)
-        print(f"PLAIN   @crdb_retry OFF : {plain_total}/{votes} votes landed "
-              f"({failures} lost to 40001)")
+        print(
+            f"PLAIN   @crdb_retry OFF : {plain_total}/{votes} votes landed "
+            f"({failures} lost to 40001)"
+        )
 
         # Reset, then the retry path — every vote eventually commits.
         with conn.cursor() as cur:
@@ -86,8 +88,11 @@ def main() -> None:
         failures = _hammer(dsn, idea_id, service.upvote, votes)
         with conn.cursor() as cur:
             retry_total = repository.current_votes(cur, idea_id)
-        print(f"RETRY   @crdb_retry ON  : {retry_total}/{votes} votes landed "
-              f"({failures} failures)")
+        print(
+            f"RETRY   @crdb_retry ON  : {retry_total}/{votes} votes landed ({failures} failures)"
+        )
+
+
 # end::runner[]
 
 
