@@ -274,10 +274,14 @@ class CockroachDBVectorStore:
         the session-level ``vector_search_beam_size``.
         """
         dimensions = self._config.embedding_dimensions
-        with psycopg.connect(self._conninfo) as conn:
-            # Enable vector index feature (required for CREATE VECTOR INDEX)
+
+        # SET CLUSTER SETTING cannot run inside a multi-statement transaction,
+        # so enable the vector-index feature on its own autocommit connection
+        # before the CREATE TABLE / CREATE VECTOR INDEX transaction below.
+        with psycopg.connect(self._conninfo, autocommit=True) as conn:
             conn.execute("SET CLUSTER SETTING feature.vector_index.enabled = true")
 
+        with psycopg.connect(self._conninfo) as conn:
             conn.execute(
                 f"""
                 CREATE TABLE IF NOT EXISTS {self._table} (
