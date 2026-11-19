@@ -1,0 +1,41 @@
+name: examples-it
+
+# Runs the Ideas Board example's integration tests on GitHub-hosted runners,
+# which ship with Docker — so Testcontainers spins up a real CockroachDB and the
+# tutorial's integration tests (the 40001 concurrency proof, follower reads,
+# metrics, CDC) actually execute. The example installs the published packages
+# from the anonymous PEP 503 feed, exactly as the tutorial/docs tell customers
+# to. Multi-region and vector ITs stay gated: REGIONAL BY ROW needs a
+# multi-region cluster (CRDB_MULTIREGION=true) and the semantic IT needs a
+# VECTOR-capable image (v25.2+) — both skip cleanly here.
+on:
+  pull_request:
+    paths:
+      - 'examples/ideas-board/**'
+      - '.github/workflows/examples-it.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'examples/ideas-board/**'
+      - '.github/workflows/examples-it.yml'
+  workflow_dispatch:
+
+jobs:
+  ideas-board-it:
+    name: Ideas Board integration tests (Testcontainers)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies (published packages from the Pages feed)
+        working-directory: examples/ideas-board
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Integration tests (real CockroachDB via Testcontainers)
+        working-directory: examples/ideas-board
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: "true"
+        run: python -m pytest -v
