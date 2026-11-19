@@ -50,14 +50,14 @@ def upvote_without_retry(dsn: str, idea_id: int) -> None:
             "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE"
         )
         with conn.transaction(), conn.cursor() as cur:
-            votes = repository.current_votes(cur, idea_id)  # <1>
-            new_votes = votes + 1  # <2>
-            repository.update_votes(cur, idea_id, new_votes)  # <3>
+            votes = repository.current_votes(cur, idea_id)
+            new_votes = votes + 1
+            repository.update_votes(cur, idea_id, new_votes)
 # end::plain[]
 
 
 # tag::retry[]
-@crdb_retry(max_retries=25, base_delay=0.02, isolation=IsolationLevel.SERIALIZABLE)  # <1>
+@crdb_retry(max_retries=25, base_delay=0.02, isolation=IsolationLevel.SERIALIZABLE)
 def upvote(dsn: str, idea_id: int) -> None:
     """Upvote WITH automatic retry — every vote eventually lands."""
     _apply_upvote(dsn, idea_id)
