@@ -5,9 +5,10 @@ name: examples-it
 # tutorial's integration tests (the 40001 concurrency proof, follower reads,
 # metrics, CDC) actually execute. The example installs the published packages
 # from the anonymous PEP 503 feed, exactly as the tutorial/docs tell customers
-# to. Multi-region and vector ITs stay gated: REGIONAL BY ROW needs a
-# multi-region cluster (CRDB_MULTIREGION=true) and the semantic IT needs a
-# VECTOR-capable image (v25.2+) — both skip cleanly here.
+# to. The semantic IT boots its own vector-index-capable CockroachDB
+# (CRDB_VECTOR_IMAGE, default v26.2) via Testcontainers and runs here. The
+# multi-region IT stays gated: REGIONAL BY ROW needs a multi-region cluster
+# (CRDB_MULTIREGION=true), so it skips cleanly.
 on:
   pull_request:
     paths:
