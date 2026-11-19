@@ -2,9 +2,9 @@
 
 The native ``VECTOR`` type requires v25.2+; ``ensure_table()`` also issues
 ``CREATE VECTOR INDEX`` (v26.2+). Boots the image named by ``CRDB_VECTOR_IMAGE``
-(default ``cockroachdb/cockroach:latest-v25.2``). Skips cleanly when Docker is
+(default ``cockroachdb/cockroach:latest-v26.2``). Skips cleanly when Docker is
 unavailable, and skips honestly (rather than faking a pass) if the chosen image
-lacks VECTOR support. Mirrors the Java ``SemanticSearchIT``.
+lacks VECTOR/vector-index support. Mirrors the Java ``SemanticSearchIT``.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from semantic_service import DeterministicEmbeddingProvider, SemanticIdeaService
 
 from cockroachdb.ai import Document
 
-IMAGE = os.environ.get("CRDB_VECTOR_IMAGE", "cockroachdb/cockroach:latest-v25.2")
+IMAGE = os.environ.get("CRDB_VECTOR_IMAGE", "cockroachdb/cockroach:latest-v26.2")
 
 # Four deterministic 3-dim vectors pointing in distinct directions.
 DOCS = {
@@ -44,8 +44,11 @@ def dsn() -> str:
 
 
 def _skip_if_no_vector(exc: Exception) -> None:
-    if "vector" in str(exc).lower():
-        pytest.skip(f"VECTOR unsupported on {IMAGE}: {exc}")
+    msg = str(exc).lower()
+    # VECTOR type / CREATE VECTOR INDEX absent on this image surfaces as a
+    # message mentioning "vector", or a generic "unimplemented" feature error.
+    if "vector" in msg or "unimplemented" in msg:
+        pytest.skip(f"VECTOR/vector-index unsupported on {IMAGE}: {exc}")
     raise exc
 
 
