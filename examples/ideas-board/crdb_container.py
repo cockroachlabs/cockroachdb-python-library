@@ -21,13 +21,17 @@ IMAGE = "cockroachdb/cockroach:v24.3.0"
 
 
 @contextlib.contextmanager
-def insecure_crdb() -> Iterator[str]:
-    """Start an insecure single-node CockroachDB; yield a psycopg DSN."""
+def insecure_crdb(image: str = IMAGE) -> Iterator[str]:
+    """Start an insecure single-node CockroachDB; yield a psycopg DSN.
+
+    ``image`` defaults to the pinned fundamentals image; the semantic-search IT
+    overrides it with a VECTOR-capable image (v25.2+).
+    """
     from testcontainers.core.container import DockerContainer
     from testcontainers.core.waiting_utils import wait_for_logs
 
     container = (
-        DockerContainer(IMAGE)
+        DockerContainer(image)
         .with_command("start-single-node --insecure")
         .with_exposed_ports(26257)
     )
