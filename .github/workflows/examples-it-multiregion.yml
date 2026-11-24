@@ -52,7 +52,7 @@ jobs:
         env:
           CRDB_MULTIREGION: "true"
           CRDB_URL: "postgres://root@localhost:26257/defaultdb?sslmode=disable"
-        run: python -m pytest test_regional_it.py -v
+        run: python -m pytest test_regional_it.py test_multiregion_check_it.py -v
 
       - name: Cluster diagnostics on failure
         if: failure()
