@@ -22,6 +22,7 @@ from cockroachdb.sqla.dialect import CockroachDBDialect
 from cockroachdb.sqla.engine import create_cockroachdb_engine
 from cockroachdb.sqla.events import FollowerReadContext, RegionContext
 from cockroachdb.sqla.mixins import GlobalTableMixin, RegionalByRowMixin, VectorColumnMixin
+from cockroachdb.sqla.multiregion import verify_multiregion_schema
 from cockroachdb.sqla.session import CockroachDBSession, RegionalSession
 
 __all__ = [
@@ -35,4 +36,5 @@ __all__ = [
     "RegionalSession",
     "VectorColumnMixin",
     "create_cockroachdb_engine",
+    "verify_multiregion_schema",
 ]

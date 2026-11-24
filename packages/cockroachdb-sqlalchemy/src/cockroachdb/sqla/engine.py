@@ -30,6 +30,8 @@ _COCKROACHDB_ENGINE_DEFAULTS: dict[str, Any] = {
 def create_cockroachdb_engine(
     url: str,
     config: CockroachDBConfig | None = None,
+    multiregion_base: type | None = None,
+    multiregion_mode: str = "warn",
     **kwargs: Any,
 ) -> Engine:
     """Create a SQLAlchemy engine with CockroachDB-optimized defaults.
@@ -50,6 +52,13 @@ def create_cockroachdb_engine(
             ``cockroachdb://user:pass@host:26257/db``).
         config: Optional library configuration. When ``None`` a default
             :class:`CockroachDBConfig` is used.
+        multiregion_base: Opt-in. When given a SQLAlchemy declarative base,
+            runs the read-only multi-region schema check (see
+            :func:`verify_multiregion_schema`) against the just-created engine.
+            Omit it (the default ``None``) to skip the check entirely.
+        multiregion_mode: ``"none"`` | ``"warn"`` | ``"validate"`` — how the
+            check reacts (default ``"warn"``). Only used when ``multiregion_base``
+            is provided.
         **kwargs: Additional keyword arguments forwarded to
             :func:`sqlalchemy.create_engine`. These override the
             CockroachDB defaults listed above.
@@ -69,5 +78,10 @@ def create_cockroachdb_engine(
         merged.get("pool_pre_ping"),
         merged.get("pool_recycle"),
     )
+
+    if multiregion_base is not None:
+        from cockroachdb.sqla.multiregion import verify_multiregion_schema
+
+        verify_multiregion_schema(engine, multiregion_base, mode=multiregion_mode)
 
     return engine

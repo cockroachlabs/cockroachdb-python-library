@@ -41,7 +41,7 @@ class RegionalByRowMixin:
     code or a default value in CockroachDB should assign it.
     """
 
-    crdb_region: str = Column(  # type: ignore[assignment]
+    crdb_region = Column(
         String,
         nullable=False,
         server_default="",
