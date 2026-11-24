@@ -6,6 +6,7 @@
 
 cockroachdb==0.1.2
 cockroachdb-core==0.2.0  # metrics (RetryEngine) + follower-read/region context
+cockroachdb-sqlalchemy==0.2.0  # multi-region schema check (verify_multiregion_schema + ORM mixins); pulls sqlalchemy>=2.0
 cockroachdb-cdc==0.1.1   # changefeed handlers + webhook payload parsing
 cockroachdb-ai==0.1.2    # pgvector vector store (semantic search); CREATE VECTOR INDEX needs cockroach >= v26.2
 psycopg[binary]>=3.1
