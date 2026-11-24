@@ -7,6 +7,7 @@ region context, and follower read support for CockroachDB.
 from __future__ import annotations
 
 from cockroachdb.core.follower_read import FollowerReadContext
+from cockroachdb.core.multiregion import MultiregionCheckError
 from cockroachdb.core.otel_metrics import OpenTelemetryMetricsCollector
 from cockroachdb.core.region import RegionContext
 from cockroachdb.core.retry import RetryEngine
@@ -19,6 +20,7 @@ __all__ = [
     "AsyncCockroachDBTemplate",
     "CockroachDBTemplate",
     "FollowerReadContext",
+    "MultiregionCheckError",
     "OpenTelemetryMetricsCollector",
     "RegionContext",
     "RetryEngine",
