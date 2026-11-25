@@ -35,6 +35,10 @@ packages = ["src/cockroachdb"]
 
 # Bake the consumer-facing agent guide into the installed package so it lands at
 # cockroachdb/AGENTS.md (readable via importlib.resources). Single source of truth
-# is the shared docs/agents/AGENTS.md at the repo root.
-[tool.hatch.build.targets.wheel.force-include]
-"../../docs/agents/AGENTS.md" = "cockroachdb/AGENTS.md"
+# is the shared docs/agents/AGENTS.md at the repo root. The sdist pulls it into the
+# package dir; the wheel (built from the sdist by `uv build`) then includes it
+# automatically alongside the package's .py files. (A wheel-level force-include
+# can't be used here: it would have to reference a path valid only in the sdist,
+# which breaks editable/source wheel builds used by `uv sync`.)
+[tool.hatch.build.targets.sdist.force-include]
+"../../docs/agents/AGENTS.md" = "src/cockroachdb/AGENTS.md"

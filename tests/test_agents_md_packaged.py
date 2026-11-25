@@ -22,7 +22,7 @@ BASE_PKG = REPO_ROOT / "packages" / "cockroachdb"
 @pytest.mark.skipif(shutil.which("uv") is None, reason="uv required to build the wheel")
 def test_agents_md_packaged_in_base_wheel(tmp_path: Path) -> None:
     subprocess.run(
-        ["uv", "build", "--wheel", "-o", str(tmp_path)],
+        ["uv", "build", "-o", str(tmp_path)],
         cwd=BASE_PKG,
         check=True,
         capture_output=True,
