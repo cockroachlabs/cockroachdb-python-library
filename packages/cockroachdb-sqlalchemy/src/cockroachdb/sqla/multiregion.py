@@ -12,7 +12,7 @@ directly, or pass ``multiregion_base=`` to :func:`create_cockroachdb_engine`.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from cockroachdb.core.multiregion import (
     MultiregionCheckError,
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def _tables_from_base(base: type) -> list[MultiregionTable]:
+def _tables_from_base(base: Any) -> list[MultiregionTable]:
     """Every mapped class under ``base`` as a :class:`MultiregionTable`.
 
     Keys off the ORM mixins (``Table.info["cockroachdb_locality"]``), not the
@@ -83,7 +83,7 @@ def verify_multiregion_schema(engine: Engine, base: type, mode: str = "warn") ->
 
     with engine.connect() as conn:
 
-        def query(sql: str, params: object = ()) -> list:
+        def query(sql: str, params: Any = ()) -> list[Any]:
             result = conn.exec_driver_sql(sql, params) if params else conn.exec_driver_sql(sql)
             return list(result)
 

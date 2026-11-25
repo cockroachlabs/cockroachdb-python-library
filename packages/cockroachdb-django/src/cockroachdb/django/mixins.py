@@ -28,7 +28,7 @@ from django.db import models
 from django.utils import timezone
 
 
-class RegionalByRowMixin(models.Model):
+class RegionalByRowMixin(models.Model):  # type: ignore[misc]
     """Mixin for CockroachDB REGIONAL BY ROW tables.
 
     Adds a ``crdb_region`` column and sets ``Meta`` to include the
@@ -52,7 +52,7 @@ class RegionalByRowMixin(models.Model):
         abstract = True
 
 
-class GlobalTableMixin(models.Model):
+class GlobalTableMixin(models.Model):  # type: ignore[misc]
     """Mixin for CockroachDB GLOBAL tables.
 
     Marks the table as globally replicated.  Global tables are readable
@@ -66,7 +66,7 @@ class GlobalTableMixin(models.Model):
         abstract = True
 
 
-class TimestampMixin(models.Model):
+class TimestampMixin(models.Model):  # type: ignore[misc]
     """Mixin that adds ``created_at`` and ``updated_at`` timestamp fields.
 
     Common pattern in CockroachDB applications for tracking record

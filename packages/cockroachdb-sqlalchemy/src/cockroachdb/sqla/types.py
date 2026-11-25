@@ -7,10 +7,12 @@ column reflection.
 
 from __future__ import annotations
 
+from typing import Any
+
 import sqlalchemy.types as sqltypes
 from sqlalchemy.dialects.postgresql import ARRAY, INET, JSONB, UUID
 
-CRDB_TYPE_MAP: dict[str, sqltypes.TypeEngine] = {
+CRDB_TYPE_MAP: dict[str, sqltypes.TypeEngine[Any]] = {
     "bool": sqltypes.Boolean(),
     "boolean": sqltypes.Boolean(),
     "bigint": sqltypes.BigInteger(),
@@ -53,7 +55,7 @@ CRDB_TYPE_MAP: dict[str, sqltypes.TypeEngine] = {
 }
 
 
-def resolve_type(type_str: str) -> sqltypes.TypeEngine:
+def resolve_type(type_str: str) -> sqltypes.TypeEngine[Any]:
     """Resolve a CockroachDB type string to a SQLAlchemy type.
 
     Handles parameterized types like ``VARCHAR(255)`` and ``DECIMAL(10,2)``.

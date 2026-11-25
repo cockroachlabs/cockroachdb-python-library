@@ -31,7 +31,7 @@ jobs:
         run: uv run ruff check .
 
       - name: Mypy
-        run: uv run mypy packages/cockroachdb/src packages/cockroachdb-core/src packages/cockroachdb-continuum/src packages/cockroachdb-testing/src
+        run: uv run mypy packages/cockroachdb/src packages/cockroachdb-core/src packages/cockroachdb-continuum/src packages/cockroachdb-testing/src packages/cockroachdb-cdc/src packages/cockroachdb-ai/src packages/cockroachdb-sqlalchemy/src packages/cockroachdb-django/src
 
       - name: Start CockroachDB
         # Many tests (DDL compiler, dialect, alembic, integration) connect to a

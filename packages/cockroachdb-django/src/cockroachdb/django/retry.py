@@ -179,7 +179,7 @@ class atomic_with_retry:  # noqa: N801  # intentional snake_case: used as a deco
         exc_tb: Any,
     ) -> bool:
         # Delegate to the inner atomic context manager
-        return self._atomic.__exit__(exc_type, exc_val, exc_tb)  # type: ignore[union-attr]
+        return bool(self._atomic.__exit__(exc_type, exc_val, exc_tb))
 
     def __call__(self, fn: Callable[..., T]) -> Callable[..., T]:
         """Use as a decorator to wrap a function with retry + atomic."""
@@ -221,4 +221,4 @@ class atomic_with_retry:  # noqa: N801  # intentional snake_case: used as a deco
                 last_err,
             ) from last_err
 
-        return wrapper  # type: ignore[return-value]
+        return wrapper

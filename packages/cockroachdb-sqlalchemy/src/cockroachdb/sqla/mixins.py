@@ -25,6 +25,8 @@ Example::
 
 from __future__ import annotations
 
+from typing import Any
+
 from sqlalchemy import Column, String
 from sqlalchemy.orm import declared_attr
 
@@ -49,7 +51,7 @@ class RegionalByRowMixin:
     )
 
     @declared_attr  # type: ignore[arg-type]
-    def __table_args__(cls) -> dict:  # noqa: N805
+    def __table_args__(cls) -> dict[str, Any]:  # noqa: N805
         return {
             "info": {"cockroachdb_locality": "REGIONAL BY ROW"},
         }
@@ -65,7 +67,7 @@ class GlobalTableMixin:
     """
 
     @declared_attr  # type: ignore[arg-type]
-    def __table_args__(cls) -> dict:  # noqa: N805
+    def __table_args__(cls) -> dict[str, Any]:  # noqa: N805
         return {
             "info": {"cockroachdb_locality": "GLOBAL"},
         }
