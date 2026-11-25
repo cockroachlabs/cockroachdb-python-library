@@ -1,0 +1,8 @@
+# CockroachDB Python Library
+
+Consumer guide for coding agents working in an app that depends on the
+`cockroachdb` packages (which helpers to use, what not to hand-roll):
+https://cockroachlabs.github.io/cockroachdb-python-library/agents/AGENTS.md
+
+The same guide ships inside the installed base package at `cockroachdb/AGENTS.md`.
+For CockroachDB database fundamentals, see https://docs.cockroachlabs.com/llms.txt
