@@ -10,6 +10,8 @@ and requires ``alembic`` to be installed.
 
 from __future__ import annotations
 
+from typing import Any
+
 try:
     import alembic.ddl.postgresql
     from sqlalchemy.ext.compiler import compiles
@@ -29,9 +31,9 @@ else:
         transactional_ddl = False
 
     @compiles(alembic.ddl.postgresql.PostgresqlColumnType, "cockroachdb")
-    def visit_column_type(*args, **kwargs):
+    def visit_column_type(*args: Any, **kwargs: Any) -> Any:
         return alembic.ddl.postgresql.visit_column_type(*args, **kwargs)
 
-    @compiles(alembic.ddl.postgresql.ColumnComment, "cockroachdb")
-    def visit_column_comment(*args, **kwargs):
+    @compiles(alembic.ddl.postgresql.ColumnComment, "cockroachdb")  # type: ignore[attr-defined]
+    def visit_column_comment(*args: Any, **kwargs: Any) -> Any:
         return alembic.ddl.postgresql.visit_column_comment(*args, **kwargs)

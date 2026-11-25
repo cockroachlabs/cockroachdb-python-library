@@ -77,6 +77,13 @@ module = ["numpy", "numpy.*"]
 follow_imports = "skip"
 follow_imports_for_stubs = true
 
+# Django ships no py.typed marker and has no bundled stubs, so mypy sees its
+# modules as untyped. Treat them as Any rather than failing the
+# cockroachdb-django adapter on [import-untyped]; our own code stays strict.
+[[tool.mypy.overrides]]
+module = ["django.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"

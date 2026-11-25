@@ -37,7 +37,7 @@ class _SavepointState(threading.local):
     server-side retry protocol.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.cockroach_restart = False
 
 
@@ -59,11 +59,11 @@ class CockroachDBDialect(PGDialect_psycopg):
     supports_sequences = False
     supports_statement_cache = True
 
-    statement_compiler = CockroachCompiler
-    preparer = CockroachIdentifierPreparer
+    statement_compiler = CockroachCompiler  # type: ignore[assignment]
+    preparer = CockroachIdentifierPreparer  # type: ignore[assignment]
     ddl_compiler = CockroachDDLCompiler
 
-    construct_arguments: ClassVar = [
+    construct_arguments: ClassVar = [  # type: ignore[misc]
         (
             sa_schema.Index,
             {"storing": []},
@@ -71,11 +71,11 @@ class CockroachDBDialect(PGDialect_psycopg):
     ]
 
     def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+        super().__init__(**kwargs)  # type: ignore[no-untyped-call]
 
     # --- Version detection ------------------------------------------------
 
-    def _get_server_version_info(self, connection):
+    def _get_server_version_info(self, connection: Connection) -> tuple[int, int, int]:
         """Parse CockroachDB version string.
 
         CockroachDB returns ``CockroachDB CCL v24.3.33 (...)`` instead
@@ -83,14 +83,14 @@ class CockroachDBDialect(PGDialect_psycopg):
         version and present it as a tuple so SQLAlchemy doesn't crash.
         """
         v = connection.exec_driver_sql("select version()").scalar()
-        m = re.match(r".*?v(\d+)\.(\d+)\.(\d+)", v)
+        m = re.match(r".*?v(\d+)\.(\d+)\.(\d+)", str(v))
         if m:
             return (int(m.group(1)), int(m.group(2)), int(m.group(3)))
         return (24, 3, 0)
 
     # --- Column reflection ------------------------------------------------
 
-    def get_columns(
+    def get_columns(  # type: ignore[override]
         self,
         connection: Connection,
         table_name: str,
@@ -162,7 +162,7 @@ class CockroachDBDialect(PGDialect_psycopg):
 
         return result
 
-    def get_multi_columns(self, connection: Connection, **kw: Any) -> Any:
+    def get_multi_columns(self, connection: Connection, **kw: Any) -> Any:  # type: ignore[override]
         """Route batch column reflection through the CRDB-safe ``get_columns``.
 
         SQLAlchemy 2.1's ``MetaData.reflect()`` uses the batch
@@ -171,11 +171,11 @@ class CockroachDBDialect(PGDialect_psycopg):
         not implement.  Delegating to the generic per-table reflection makes
         it call our ``information_schema``-based :meth:`get_columns` instead.
         """
-        return self._default_multi_reflect(self.get_columns, connection, **kw)
+        return self._default_multi_reflect(self.get_columns, connection, **kw)  # type: ignore[no-untyped-call]
 
     # --- Index reflection -------------------------------------------------
 
-    def get_indexes(
+    def get_indexes(  # type: ignore[override]
         self,
         connection: Connection,
         table_name: str,
@@ -183,7 +183,7 @@ class CockroachDBDialect(PGDialect_psycopg):
         **kw: Any,
     ) -> list[dict[str, Any]]:
         """Reflect indexes, removing ``duplicates_constraint`` from unique indexes."""
-        indexes = super().get_indexes(connection, table_name, schema, **kw)
+        indexes: list[dict[str, Any]] = super().get_indexes(connection, table_name, schema, **kw)  # type: ignore[no-untyped-call]
         for index in indexes:
             if index.get("unique") and "duplicates_constraint" in index:
                 del index["duplicates_constraint"]
@@ -191,23 +191,23 @@ class CockroachDBDialect(PGDialect_psycopg):
 
     # --- Savepoint protocol -----------------------------------------------
 
-    def do_savepoint(self, connection, name):
+    def do_savepoint(self, connection: Any, name: Any) -> None:
         if savepoint_state.cockroach_restart:
             connection.execute(text("SAVEPOINT cockroach_restart"))
         else:
-            super().do_savepoint(connection, name)
+            super().do_savepoint(connection, name)  # type: ignore[no-untyped-call]
 
-    def do_rollback_to_savepoint(self, connection, name):
+    def do_rollback_to_savepoint(self, connection: Any, name: Any) -> None:
         if savepoint_state.cockroach_restart:
             connection.execute(text("ROLLBACK TO SAVEPOINT cockroach_restart"))
         else:
-            super().do_rollback_to_savepoint(connection, name)
+            super().do_rollback_to_savepoint(connection, name)  # type: ignore[no-untyped-call]
 
-    def do_release_savepoint(self, connection, name):
+    def do_release_savepoint(self, connection: Any, name: Any) -> None:
         if savepoint_state.cockroach_restart:
             connection.execute(text("RELEASE SAVEPOINT cockroach_restart"))
         else:
-            super().do_release_savepoint(connection, name)
+            super().do_release_savepoint(connection, name)  # type: ignore[no-untyped-call]
 
 
 # --- Alembic integration (side-effect import) ---

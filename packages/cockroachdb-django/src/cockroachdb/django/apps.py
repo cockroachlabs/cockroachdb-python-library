@@ -9,7 +9,7 @@ from __future__ import annotations
 from django.apps import AppConfig
 
 
-class CockroachDBConfig(AppConfig):
+class CockroachDBConfig(AppConfig):  # type: ignore[misc]
     name = "cockroachdb.django"
     label = "cockroachdb"
     verbose_name = "CockroachDB"

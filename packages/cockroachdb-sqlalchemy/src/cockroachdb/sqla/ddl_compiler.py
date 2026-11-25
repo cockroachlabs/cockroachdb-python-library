@@ -6,6 +6,8 @@ speedup on CockroachDB (single schema-change job vs one per index).
 
 from __future__ import annotations
 
+from typing import Any
+
 from sqlalchemy import exc
 from sqlalchemy.dialects.postgresql.base import PGDDLCompiler
 
@@ -13,7 +15,7 @@ from sqlalchemy.dialects.postgresql.base import PGDDLCompiler
 class CockroachDDLCompiler(PGDDLCompiler):
     """DDL compiler that inlines indexes and handles computed columns."""
 
-    def visit_computed_column(self, generated, **kw):
+    def visit_computed_column(self, generated: Any, **kw: Any) -> str:
         """CockroachDB computed columns must be STORED (no virtual)."""
         if generated.persisted is False:
             raise exc.CompileError(
@@ -26,7 +28,7 @@ class CockroachDDLCompiler(PGDDLCompiler):
         )
         return f"AS ({sqltext}) STORED"
 
-    def visit_create_table(self, create, **kw):
+    def visit_create_table(self, create: Any, **kw: Any) -> str:
         """Override CREATE TABLE to inject inline indexes before closing paren.
 
         CockroachDB processes inline indexes in a single schema-change job,
@@ -34,7 +36,7 @@ class CockroachDDLCompiler(PGDDLCompiler):
         job — resulting in ~25x slower table creation.
         """
         table = create.element
-        ddl = super().visit_create_table(create, **kw)
+        ddl: str = super().visit_create_table(create, **kw)  # type: ignore[no-untyped-call]
 
         inline_parts: list[str] = []
         for index in table.indexes:
@@ -62,9 +64,9 @@ class CockroachDDLCompiler(PGDDLCompiler):
 
         return ddl
 
-    def visit_create_index(self, create, **kw):
+    def visit_create_index(self, create: Any, **kw: Any) -> str:  # type: ignore[override]
         """Skip non-unique indexes — they were already inlined."""
         index = create.element
         if not index.unique and hasattr(index, "table") and index.table is not None:
             return ""
-        return super().visit_create_index(create, **kw)
+        return super().visit_create_index(create, **kw)  # type: ignore[no-untyped-call,no-any-return]

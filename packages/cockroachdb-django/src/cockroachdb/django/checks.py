@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 SETTING = "COCKROACHDB_MULTIREGION_MODE"
 
 
-def _tables_from_models(models: Iterable[type]) -> list[MultiregionTable]:
+def _tables_from_models(models: Iterable[Any]) -> list[MultiregionTable]:
     """Every concrete model as a :class:`MultiregionTable`.
 
     Keys off the ORM mixins' ``crdb_locality`` attribute. Unannotated models are
@@ -95,9 +95,9 @@ def check_multiregion_schema(app_configs: Any = None, **kwargs: Any) -> list[Che
     try:
         with conn.cursor() as cursor:
 
-            def query(sql: str, params: object = ()) -> list:
+            def query(sql: str, params: object = ()) -> list[Any]:
                 cursor.execute(sql, params or None)
-                return cursor.fetchall()
+                return list(cursor.fetchall())
 
             outcome, report = evaluate_schema(query, tables, mode)
     except Exception as exc:  # pragma: no cover - exercised via integration

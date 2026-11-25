@@ -35,6 +35,11 @@ class RegionContext:
         return _region_var.set(region)
 
     @classmethod
+    def reset(cls, token: contextvars.Token[str | None]) -> None:
+        """Restore the region to its value before the matching :meth:`set`."""
+        _region_var.reset(token)
+
+    @classmethod
     @contextmanager
     def scoped(cls, region: str) -> Iterator[str]:
         """Context manager that sets the region for the duration of a block."""

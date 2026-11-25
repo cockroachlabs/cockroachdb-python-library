@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from sqlalchemy.dialects.postgresql.base import PGCompiler, PGIdentifierPreparer
 
 
@@ -20,6 +22,6 @@ class CockroachIdentifierPreparer(PGIdentifierPreparer):
 class CockroachCompiler(PGCompiler):
     """SQL compiler with CockroachDB-specific features."""
 
-    def format_from_hint_text(self, table, text, is_lateral):
+    def format_from_hint_text(self, table: Any, text: Any, is_lateral: Any) -> str:  # type: ignore[override]
         """Support CockroachDB index hints: ``table@index_name``."""
-        return table.name + "@" + text
+        return f"{table.name}@{text}"

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 if TYPE_CHECKING:
     from cockroachdb.cdc.handler import ChangefeedHandlerRegistry
@@ -44,7 +44,7 @@ def create_fastapi_router(
             "Install it with: pip install cockroachdb-cdc[fastapi]"
         ) from exc
 
-    router = APIRouter(prefix=prefix, tags=tags or ["cdc"])
+    router = APIRouter(prefix=prefix, tags=cast("list[Any]", tags or ["cdc"]))
 
     for endpoint, info in registry.get_handlers().items():
 

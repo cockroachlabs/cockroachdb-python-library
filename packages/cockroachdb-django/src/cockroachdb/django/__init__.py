@@ -25,10 +25,12 @@ even ``import cockroachdb.django``.
 
 from __future__ import annotations
 
+from typing import Any
+
 __version__ = "0.1.0"
 
 
-def __getattr__(name: str):
+def __getattr__(name: str) -> Any:
     """Lazy module-level imports to avoid triggering Django's app registry."""
     _lazy = {
         "CockroachDBMiddleware": "cockroachdb.django.middleware",

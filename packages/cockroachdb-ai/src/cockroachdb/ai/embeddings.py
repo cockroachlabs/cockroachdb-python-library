@@ -130,7 +130,7 @@ class SentenceTransformerEmbeddingProvider:
         if not texts:
             return []
         vectors: Any = self._model.encode(texts)
-        return [v.tolist() for v in vectors]  # type: ignore[union-attr]
+        return [v.tolist() for v in vectors]
 
 
 class OpenAIEmbeddingProvider:
@@ -203,7 +203,7 @@ class OpenAIEmbeddingProvider:
             input=text,
             dimensions=self._dimensions,
         )
-        return response.data[0].embedding
+        return list(response.data[0].embedding)
 
     async def embed_batch(self, texts: list[str]) -> list[list[float]]:
         """Embed multiple texts in a single API call.

@@ -23,6 +23,8 @@ from cockroachdb.core.region import RegionContext
 if TYPE_CHECKING:
     from sqlalchemy.engine import Engine
 
+__all__ = ["FollowerReadContext", "RegionContext", "setup_cockroachdb_events"]
+
 logger = logging.getLogger(__name__)
 
 
