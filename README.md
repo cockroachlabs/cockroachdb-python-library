@@ -7,6 +7,8 @@
 
 A production-grade Python library for [CockroachDB](https://www.cockroachlabs.com/) that provides automatic transaction retry handling, multi-region support, follower reads, CDC webhook handlers, vector search, and RAG pipelines. Part of the CockroachDB language-specific library family alongside the [Java Spring Boot Starter](https://github.com/cockroachlabs/cockroachdb-java-library), [.NET Library](https://github.com/cockroachlabs/cockroachdb-dotnet-library), and [Go Library](https://github.com/cockroachlabs/cockroachdb-go-library).
 
+> **Using an AI coding agent?** A consumer guide for agents working in your app ships inside the installed package at `cockroachdb/AGENTS.md` (source: [`docs/agents/AGENTS.md`](docs/agents/AGENTS.md)) — it tells the agent which helpers to use and what not to hand-roll.
+
 ## Architecture
 
 <p align="center">

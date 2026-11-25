@@ -4,7 +4,7 @@
 # anonymous PEP 503 feed, NOT public PyPI.
 --extra-index-url https://cockroachlabs.github.io/cockroachdb-python-library/simple/
 
-cockroachdb==0.1.2
+cockroachdb==0.1.3
 cockroachdb-core==0.3.0  # metrics (RetryEngine) + follower-read/region context
 cockroachdb-sqlalchemy==0.3.0  # multi-region schema check (verify_multiregion_schema + ORM mixins); pulls sqlalchemy>=2.0
 cockroachdb-cdc==0.2.0   # changefeed handlers + webhook payload parsing
