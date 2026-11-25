@@ -323,7 +323,7 @@ wheels = [
 
 [[package]]
 name = "cockroachdb"
-version = "0.1.3"
+version = "0.1.1"
 source = { editable = "packages/cockroachdb" }
 dependencies = [
     { name = "pydantic" },
@@ -347,7 +347,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "cockroachdb-ai"
-version = "0.2.0"
+version = "0.1.1"
 source = { editable = "packages/cockroachdb-ai" }
 dependencies = [
     { name = "cockroachdb" },
@@ -385,7 +385,7 @@ provides-extras = ["openai", "local", "dev"]
 
 [[package]]
 name = "cockroachdb-cdc"
-version = "0.2.0"
+version = "0.1.1"
 source = { editable = "packages/cockroachdb-cdc" }
 dependencies = [
     { name = "cockroachdb" },
@@ -461,7 +461,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "cockroachdb-core"
-version = "0.3.0"
+version = "0.1.1"
 source = { editable = "packages/cockroachdb-core" }
 dependencies = [
     { name = "cockroachdb" },
@@ -497,7 +497,7 @@ provides-extras = ["metrics", "otel", "dev"]
 
 [[package]]
 name = "cockroachdb-django"
-version = "0.3.0"
+version = "0.1.1"
 source = { editable = "packages/cockroachdb-django" }
 dependencies = [
     { name = "cockroachdb" },
@@ -549,7 +549,7 @@ requires-dist = [
 
 [[package]]
 name = "cockroachdb-sqlalchemy"
-version = "0.3.0"
+version = "0.1.1"
 source = { editable = "packages/cockroachdb-sqlalchemy" }
 dependencies = [
     { name = "cockroachdb" },
