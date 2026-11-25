@@ -48,6 +48,22 @@ jobs:
       - name: Assemble Pages site (landing + PEP 503 index)
         run: python3 scripts/build_pages.py
 
+      - name: Publish consumer AGENTS.md + llms.txt
+        run: |
+          set -euo pipefail
+          mkdir -p _site/agents
+          cp docs/agents/AGENTS.md _site/agents/AGENTS.md
+          cat > _site/llms.txt <<'EOF'
+          # CockroachDB Python Library
+
+          Consumer guide for coding agents working in an app that depends on the
+          `cockroachdb` packages (which helpers to use, what not to hand-roll):
+          https://cockroachlabs.github.io/cockroachdb-python-library/agents/AGENTS.md
+
+          The same guide ships inside the installed base package at `cockroachdb/AGENTS.md`.
+          For CockroachDB database fundamentals, see https://docs.cockroachlabs.com/llms.txt
+          EOF
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

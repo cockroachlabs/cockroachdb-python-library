@@ -46,12 +46,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-`requirements.txt` pins the **published** `cockroachdb==0.1.3` (plus
+`requirements.txt` pins the **published** `cockroachdb==0.1.4` (plus
 `cockroachdb-testing==0.1.1`) and carries the `--extra-index-url` line for the
 feed. A single-package install looks like:
 
 ```bash
-pip install 'cockroachdb==0.1.3' \
+pip install 'cockroachdb==0.1.4' \
   --extra-index-url https://cockroachlabs.github.io/cockroachdb-python-library/simple/
 ```
 
